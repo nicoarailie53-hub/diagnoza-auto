@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1A1A2E">
+<meta name="description" content="Atelier Auto - Cauta si interpreteaza codurile de eroare OBD2 pentru Mercedes-Benz, Renault si Volkswagen">
+<title>Atelier Auto - Coduri OBD</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      console.log('[PWA] Service Worker registered:', reg.scope);
+    }).catch(err => {
+      console.warn('[PWA] Service Worker registration failed:', err);
+    });
+  });
+}
+</script>
+</head>
+<body>
+<header class="app-header">
+  <div class="header-row">
+    <div class="brand-mark">&#128313;</div>
+    <div class="brand-text">
+      <h1>Atelier Auto</h1>
+      <p>Cauta si interpreteaza coduri OBD2</p>
+    </div>
+    <button id="journal-btn" class="hdr-btn" title="Jurnalul meu de cercetare">
+      <span id="journal-count">0</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+  <div class="selector-card">
+    <div class="brand-options" id="brand-options">
+      <button class="brand-btn active" data-brand="all">TOATE (OBD2 general)</button>
+      <button class="brand-btn" data-brand="mb">&#127918; Mercedes-Benz (MB)</button>
+      <button class="brand-btn" data-brand="ro">&#127964; Renault (DFxxx)</button>
+      <button class="brand-btn" data-brand="vw">&#127915; Volkswagen / VAG</button>
+    </div>
+  </div>
+
+  <div class="search-card">
+    <div class="search-bar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search-input" placeholder="Cauta cod (ex: P0300, DF053, 17965) sau cuvant cheie (turbina, EGR, DPF...)">
+    </div>
+  </div>
+
+  <div class="results-card" id="results-card">
+    <div class="results-header">
+      <h2 id="results-title">0 rezultate</h2>
+      <span id="total-count">0</span>
+    </div>
+    <div class="results-list" id="results-list">
+      <div class="loading">Incarcare...</div>
+    </div>
+  </div>
+</main>
+
+<footer class="app-footer">
+  <p>Atelier Auto - Coduri OBD &copy; 2026 | PWA complet offline</p>
+</footer>
+
+<div id="journal-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>&#128222; Jurnalul meu de cercetare</h2>
+      <button id="journal-close" class="close-btn">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="journal-summary">
+        <span id="journal-count">0</span> intrari salvate
+      </div>
+      <div id="journal-list" class="journal-list">
+        <div class="empty-journal">Niciun cod adaugat inca. Adauga unul mai jos!</div>
+      </div>
+      <div class="journal-entry">
+        <input type="text" id="journal-code" placeholder="Cod OBD (ex: P0300, DF053, 17965)">
+        <select id="journal-brand">
+          <option value="TOATE">TOATE (general)</option>
+          <option value="MB">Mercedes-Benz</option>
+          <option value="RO">Renault</option>
+          <option value="VW">Volkswagen / VAG</option>
+        </select>
+        <textarea id="journal-note" placeholder="Notițe personale..."></textarea>
+        <button id="journal-save" class="btn-primary">&#128190; Salvează</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="detail-modal" class="modal">
+  <div class="modal-content detail-modal">
+    <div class="modal-header">
+      <h2 id="detail-code">Cod OBD</h2>
+      <button id="detail-close" class="close-btn">&#10005;</button>
+    </div>
+    <div class="modal-body detail-body">
+      <div class="detail-code-badge" id="detail-badge">P0300</div>
+      <div class="detail-brand" id="detail-brand">TOATE</div>
+      <div class="detail-field">
+        <span class="field-label">Descriere:</span>
+        <p id="detail-desc"></p>
+      </div>
+      <div class="detail-field">
+        <span class="field-label">Explicatie:</span>
+        <p id="detail-explanation"></p>
+      </div>
+      <div class="detail-field">
+        <span class="field-label">Cauze probabile:</span>
+        <ul id="detail-causes"></ul>
+      </div>
+      <div class="detail-field">
+        <span class="field-label">Simptome:</span>
+        <ul id="detail-symptoms"></ul>
+      </div>
+      <div class="detail-field">
+        <span class="field-label">Pasul de verificare:</span>
+        <p id="detail-action"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

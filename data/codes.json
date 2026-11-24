@@ -1,0 +1,175 @@
+{
+  "categories": [
+    {"id": "all", "label": "TOATE (OBD2 general)", "brands": ["TOATE"]},
+    {"id": "mb", "label": "Mercedes-Benz (MB)", "brands": ["MB"]},
+    {"id": "ro", "label": "Renault", "brands": ["RO"]},
+    {"id": "vw", "label": "Volkswagen / VAG", "brands": ["VW"]}
+  ],
+  "codes": [
+    {
+      "code": "P0300",
+      "brand": "TOATE",
+      "subsystem": "Motor",
+      "severity": "Alta",
+      "desc": "Ciclare neuniforma generala / Insinstarile de scurtcircuit la ignitronii",
+      "explanation": "Semnal ca motorul are cicluri de ardere neuniforme multiple, ceea ce poate duce la scaderea puterii si la consumuri crescute.",
+      "causes": ["Insinstari ignitronii unui sau mai multi cilindri", "Intrare de combustibil scazuta", "Senzori de ignitronie defecte", "Cablaj gresit conectare ignitronii"],
+      "symptoms": ["Vibratii la ridicare", "Slabiciune motor", "Consum ridicat", "Lumini de alerta ACS"],
+      "action": "Verifica connexionsul ignitronilor, testeaza cu scanner OBD2, inlocuieste ignitronii defecte."
+    },
+    {
+      "code": "P0301",
+      "brand": "TOATE",
+      "subsystem": "Motor",
+      "severity": "Inalta",
+      "desc": "Insinstare ignitrona cilindru 1",
+      "explanation": "Motorul nu pornește sau arde incoerent in cilindrul 1, ceea ce duce la reducerea puterii si la emisii nocive.",
+      "causes": ["Ignitron defect", "Intrare de combustibil blocata", "Senzor de concentratie de oxigen", "Cablaj rupt"],
+      "symptoms": ["Motor enterisit", "Slabiciune putere", "Aceseaza ACS"],
+      "action": "Testa ignitronul cilindrul 1, verifica alimentare si cablaj."
+    },
+    {
+      "code": "P0302",
+      "brand": "TOATE",
+      "subsystem": "Motor",
+      "severity": "Inalta",
+      "desc": "Insinstare ignitrona cilindru 2",
+      "explanation": "Iginitronul cilindrului 2 nu functioneaza corect, ceea ce duce la ciclare neuniforma.",
+      "causes": ["Ignitron defect", "Injector blocat", "Senzor de concentratie de oxigen", "Tuburi introzitoare rupte"],
+      "symptoms": ["Motor astupat", "Ridicare fortata", "Cos de carbon ridicat"],
+      "action": "Verifica injectorul cilindrului 2, testeaza cu scanner si forfetacere."
+    },
+    {
+      "code": "P0401",
+      "brand": "TOATE",
+      "subsystem": "Emisii",
+      "severity": "mare",
+      "desc": "Caldura EGR inexficienta / Valva EGR blocata",
+      "explanation": "Sistemul EGR nu redirecționează suficient aer cald in cameră de ardere, ceea ce afectează economia combustibilului și produce neutrul.",
+      "causes": ["Valva EGR obosită sau involvată", "Canalizări EGR obosești", "Senzor de temperatură EGR defective", "Căderea de vârf a uleiului"],
+      "symptoms": ["Exploatare neuniformă", "Consum crescut", "Pusculițe la emisii"],
+      "action": "Curăță degradul dintr-o rinoceră EGR, testează cu scanner."
+    },
+    {
+      "code": "P0420",
+      "brand": "TOATE",
+      "subsystem": "Emisii",
+      "severity": "mare",
+      "desc": "Pupa de reducere a responsabilității catalitice depășește 15%",
+      "explanation": "Catalizatorul nu reduce eficient oxizările. Acesta este un cod la nivel de sistem, nu un registru specific.",
+      "causes": ["Catalizator deteriorat", "Senzor lambda defect", "Sistem de reacție defective", "Exces de combustibil"],
+      "symptoms": ["ACS aprins permanent", "Putere redusă", "Rasilire la accelerație"],
+      "action": "Verifică senzorul lambda, testează catalizatorul, verifică tensiunea pe senzori."
+    },
+    {
+      "code": "P2002",
+      "brand": "TOATE",
+      "subsystem": "Filtru DPF / EGR",
+      "severity": "mare",
+      "desc": "Recuperarea filtru DPF este insuficientă",
+      "explanation": "Sistemul DPF nu se regenerează suficient de des, ceea ce duce la acumularea de particule.",
+      "causes": ["Civilizare prevăzută", "Adormire prelungită", "Filtru DPF obosit", "Tubare defectă"],
+      "symptoms": ["Reducere performanță", "ACS aprins", "Culoare neagră la filtru"],
+      "action": "Verifică filtru DPF, urmărește regenererii, curăță DPF."
+    },
+    {
+      "code": "DF053",
+      "brand": "RO",
+      "subsystem": "Accelerometru",
+      "severity": "Seviu;",
+      "desc": "Nivel scăzut de ulew la sasiu: ulew din motor",
+      "explanation": "Se identifică ulew pierdut în interiorul motorului, posibil în urma unei erori de valve de ventilare sau unui pistruțiu distrus.",
+      "causes": ["Ulew pierdut în interiorul motorului", "Orașul", "Drumul rutier", "Nisip", "Particule fine"],
+      "symptoms": ["Ulew sub nivel de tezaură", "Radiatori de la capăt", "Verdețe în ulew", "Sunete de urmărire"],
+      "action": "Verificău nivelul ulewului, verifică culoarea ulewului, urmărește motrul și schimbă ulewul."
+    },
+    {
+      "code": "DF123",
+      "brand": "RO",
+      "subsystem": "Film",
+      "severity": "Seviu",
+      "desc": "Film de înveliș de ulew",
+      "explanation": "Film de ulew subfiță la nivelul engine, ceea ce poate duce la maximizarea contactului dintre ponderi și bare.",
+      "causes": ["Ujel slăbit", "Rechizit", "Ujel vie", "Pistruți distrusi"],
+      "symptoms": ["Ușoară încetinire", "Pulsări asimetrice"],
+      "action": "Verifică filtrul aerului, înlocuiește filtru dacă este necesar."
+    },
+    {
+      "code": "P0507",
+      "brand": "VW",
+      "subsystem": "Start/Stop",
+      "severity": "Seviu",
+      "desc": "Bateria slăbită",
+      "explanation": "Sistemul Start/Stop nu funcționează corect din cauza bateriei slăbite, ceea ce afectează comutarea motoarelor.",
+      "causes": ["Baterie slabă", "Senzor observație", "Sistem de pornire defective"],
+      "symptoms": ["Motor pornit greu", "Oboseală rapidă"],
+      "action": "Verifică baterie, testează cu scanner, înlocuiește dacă este nevoie."
+    },
+    {
+      "code": "P0508",
+      "brand": "VW",
+      "subsystem": "Start/Stop",
+      "severity": "Seviu",
+      "desc": "Bateria slăbită 2",
+      "explanation": "Sistemul Start/Stop nu funcționează corect din cauza bateriei slăbite, ceea ce afectează comutarea motoarelor.",
+      "causes": ["Baterie slabă", "Senzor", "Sistem de oprire"],
+      "symptoms": ["Motor pornit greu", "Se oprește brusc", "Cos de carbon"],
+      "action": "Verifică baterie și sistemul de oprire, testează cu scanner."
+    },
+    {
+      "code": "P0509",
+      "brand": "VW",
+      "subsystem": "Start/Stop",
+      "severity": "Seviu",
+      "desc": "Bateria slăbită 3",
+      "explanation": "Sistemul Start/Stop nu funcționează corect din cauza bateriei slăbite, ceea ce afectează comutarea motoarelor.",
+      "causes": ["Baterie slabă", "Senzor", "Sistem de oprire"],
+      "symptoms": ["Motor pornit greu", "Se oprește brusc"],
+      "action": "Verifică baterie, testează sistemul de oprire."
+    },
+    {
+      "code": "P0601",
+      "brand": "TOATE",
+      "subsystem": "Motor",
+      "severity": "Înalta",
+      "desc": "Eroare memoriei mecanismelor de autocorectie a emisiilor",
+      "explanation": "ECU detectează o eroare critică in memorie, fiind o problemă severă.",
+      "causes": ["ECU defect", "Senzori defecte", "Probleme la alimentare", "Cablaj greșit"],
+      "symptoms": ["ACS aprins", "Eșec la decuplare", "Emisii"],
+      "action": "Verifică cu scanner avansat, verifică legăturile, testează cuute."
+    },
+    {
+      "code": "P0603",
+      "brand": "TOATE",
+      "subsystem": "Motor",
+      "severity": "Înalta",
+      "desc": "Eroare memoriei de conducere",
+      "explanation": "ECU detectează o eroare de memorie care afectează modularea.",
+      "causes": ["ECU defect", "Baterie slaba", "Cablaj greșit", "Procesor defecționand"],
+      "symptoms": ["ACS aprins", "Pornire grea", "Emisii"],
+      "action": "Verifică cu scanner, verifică alimentarea și legăturile."
+    },
+    {
+      "code": "P0299",
+      "brand": "VW",
+      "subsystem": "Turbină",
+      "severity": "mare",
+      "desc": "Presiune supraunitară la turbină",
+      "explanation": "Sistemul de admisie prea puțin rezistent sau volanul este defective, ceea ce poate duce la suprasolicitare a turbinelor.",
+      "causes": ["Volan defective", "Osmosor greșit funcționand", "Senzor presiune admisie defective", "Filtru de aer blocat"],
+      "symptoms": ["Scădere puterii", "Sunete caracteristice", "SMS activată"],
+      "action": "Verifică volanul și osmosorul, testează senzorii de presiune, verifică filtrarea aerului."
+    },
+    {
+      "code": "P17965",
+      "brand": "RO",
+      "subsystem": "Cod speciile",
+      "severity": "normal",
+      "desc": "Cod Renault specific (DFxx)",
+      "explanation": "Cod personalizat pentru modele Renault, verifică documentația tehnică specifică autovehiculului.",
+      "causes": ["Probleme specifice modelelor Renault", "Senzori defecte de tip Renault"],
+      "symptoms": ["Eroare specifică vehiculului"],
+      "action": "Consultă documentația tehnică Renault și testează cu scanner specific."
+    }
+  ]
+}
