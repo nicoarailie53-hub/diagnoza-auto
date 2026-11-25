@@ -195,22 +195,21 @@
       allCodes.forEach(cod => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = '
-          <div class="card-top">
-            <span class="badge-cod">' + cod.cod + '</span>
-            <span class="badge-marca">' + cod.marca + '</span>
-            <span class="sev sev-' + cod.sev + '">' + cod.sev + '</span>
-          </div>
-          <div class="titlu">' + cod.titlu + '</div>
-          <button class="btn-detalii" onclick="toggleDetalii(this)">Vezi detalii complete</button>
-          <div class="detalii">
-            <p><strong>Descriere:</strong> ' + cod.titlu + '</p>
-            <p><strong>Explicație:</strong> ' + cod.exp + '</p>
-            <p><strong>Cauze probabile:</strong> ' + cod.cauze.join(', ') + '</p>
-            <p><strong>Simptome:</strong> Increțește puterea, rușine mecanistică, consum mai mare, emisii neregulate.</p>
-            <p><strong>Pași de verificare:</strong> ' + cod.verif + '</p>
-          </div>
-        ';
+        card.innerHTML =
+          '<div class="card-top">' +
+          '<span class="badge-cod">' + cod.cod + '</span>' +
+          '<span class="badge-marca">' + cod.marca + '</span>' +
+          '<span class="sev sev-' + cod.sev + '">' + cod.sev + '</span>' +
+          '</div>' +
+          '<div class="titlu">' + cod.titlu + '</div>' +
+          '<button class="btn-detalii" onclick="toggleDetalii(this)">Vezi detalii complete</button>' +
+          '<div class="detalii">' +
+          '<p><strong>Descriere:</strong> ' + cod.titlu + '</p>' +
+          '<p><strong>Explicație:</strong> ' + cod.exp + '</p>' +
+          '<p><strong>Cauze probabile:</strong> ' + cod.cauze.join(', ') + '</p>' +
+          '<p><strong>Simptome:</strong> Increțește puterea, rușine mecanistică, consum mai mare, emisii neregulate.</p>' +
+          '<p><strong>Pași de verificare:</strong> ' + cod.verif + '</p>' +
+          '</div>';
         lista.appendChild(card);
       });
     }
