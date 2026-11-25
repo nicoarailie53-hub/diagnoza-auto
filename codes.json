@@ -1,0 +1,112 @@
+[
+ {
+  "code": "P0100",
+  "brand": "TOATE",
+  "subsystem": "Admisie / MAF",
+  "severity": "Putere redusă / Fum",
+  "desc": "Debitmetru masă aer (MAF) — defecțiune circuit",
+  "explanation": "Calculatorul nu primește semnal corect de la senzorul de aer.",
+  "causes": "Debitmetru MAF defect, mufă oxidată, fir întreupt, filtru aer murdar.",
+  "symptoms": "Motorul trage greu, consum crescut, martor Check Engine aprins.",
+  "action": "Verifică mufa debitmetrului, siguranțele și valorile aerului pe tester."
+ },
+ {
+  "code": "P0102",
+  "brand": "TOATE",
+  "subsystem": "Admisie / MAF",
+  "severity": "Limp Mode / Putere redusă",
+  "desc": "Debitmetru masă aer (MAF) — semnal prea slab",
+  "explanation": "Tensiunea sau frecvența trimisă de debitmetru este sub limita minimă admisă.",
+  "causes": "Senzor MAF murdar de ulei, scurtcircuit la masă, siguranță arsă.",
+  "symptoms": "Lipsă de putere la accelerare, ezitări, martor motor aprins.",
+  "action": "Curăță senzorul cu spray special MAF și verifică alimentarea de 12V/5V."
+ },
+ {
+  "code": "P0113",
+  "brand": "TOATE",
+  "subsystem": "Admisie / Temperatură",
+  "severity": "Pornire grea / Consum",
+  "desc": "Senzor temperatură aer admisie (IAT) — semnal prea mare",
+  "explanation": "ECU citește o temperatură nerealistă (de ex. -40°C) pe admisie.",
+  "causes": "Senzor IAT defect (adesea integrat în MAF sau MAP), fir rupt.",
+  "symptoms": "Amestec prea bogat, pornire grea, consum crescut de combustibil.",
+  "action": "Citește temperatura aerului pe tester cu motorul rece și compară cu temperatura de afară."
+ },
+ {
+  "code": "P0118",
+  "brand": "TOATE",
+  "subsystem": "Răcire / Temperatură",
+  "severity": "Ventilator pornit / Pornire grea",
+  "desc": "Senzor temperatură lichid răcire (ECT) — semnal prea mare",
+  "explanation": "Calculatorul nu mai știe temperatura reală a antigelului (vede -40°C).",
+  "causes": "Senzor temperatură apă defect, mufă scoasă sau fir întreupt.",
+  "symptoms": "Ventilatorul radiatorului merge continuu, pornire grea la cald, acul de temperatură nu urcă.",
+  "action": "Verifică mufa senzorului de pe chiulasă/termostat și rezistența senzorului."
+ },
+ {
+  "code": "P0121",
+  "brand": "TOATE",
+  "subsystem": "Accelerație / Clapetă",
+  "severity": "Limp Mode / Nu accelerează",
+  "desc": "Senzor poziție clapetă accelerație (TPS) — plajă incorectă",
+  "explanation": "Semnalul clapetei de accelerație nu corespunde cu poziția pedalei.",
+  "causes": "Clapetă accelerație murdară/blocată, piste uzate în senzor, cablaj.",
+  "symptoms": "Mașina nu mai accelerează normal, relanti mare sau oscilant, martor EPC/Check Engine.",
+  "action": "Curăță clapeta de accelerație și fă readaptarea ei din tester."
+ },
+ {
+  "code": "P0130",
+  "brand": "TOATE",
+  "subsystem": "Evacuare / Sondă Lambda",
+  "severity": "Consum crescut / Martor aprins",
+  "desc": "Sondă Lambda (Banc 1, Senzor 1) — defecțiune circuit",
+  "explanation": "Sonda de oxigen dinaintea catalizatorului nu mai reglează amestecul.",
+  "causes": "Sondă lambda uzată, fire topite pe evacuare, mufă oxidată.",
+  "symptoms": "Consum vizibil mai mare, miros de combustibil nears pe evacuare.",
+  "action": "Verifică pe tester dacă tensiunea sondei oscilează între 0.1V și 0.9V."
+ },
+ {
+  "code": "P0135",
+  "brand": "TOATE",
+  "subsystem": "Evacuare / Sondă Lambda",
+  "severity": "Martor Check Engine aprins",
+  "desc": "Circuit încălzire Sondă Lambda (Banc 1, Senzor 1)",
+  "explanation": "Rezistența internă care încălzește sonda la pornire este întreruptă.",
+  "causes": "Element încălzire ars în sondă, siguranță arsă, fir întreupt.",
+  "symptoms": "Martor Check Engine aprins imediat după pornirea la rece.",
+  "action": "Măsoară rezistența pe firele albe ale sondei (trebuie să fie între 4 și 15 Ohmi)."
+ },
+ {
+  "code": "P0171",
+  "brand": "TOATE",
+  "subsystem": "Amestec Aer / Combustibil",
+  "severity": "Relanti instabil / Consum",
+  "desc": "Amestec prea sărac (Banc 1)",
+  "explanation": "Intră aer nemăsurat în motor sau presiunea de combustibil este prea mică.",
+  "causes": "Furtun vacuum fisurat, garnitură admisie, debitmetru murdar, pompă slabă.",
+  "symptoms": "Relanti oscilant, ezitări la plecarea de pe loc, martor motor aprins.",
+  "action": "Verifică toate furtunurile de vacuum și valorile Fuel Trim pe tester."
+ },
+ {
+  "code": "P0172",
+  "brand": "TOATE",
+  "subsystem": "Amestec Aer / Combustibil",
+  "severity": "Consum crescut / Fum negru",
+  "desc": "Amestec prea bogat (Banc 1)",
+  "explanation": "Calculatorul injectează prea mult combustibil în raport cu aerul.",
+  "causes": "Injector care picură, senzor temperatură apă defect, filtru aer blocat.",
+  "symptoms": "Consum mare, bujii afumate, fum negru la accelerare.",
+  "action": "Verifică corecțiile de combustibil și senzorii MAP/MAF/ECT."
+ },
+ {
+  "code": "P0190",
+  "brand": "TOATE",
+  "subsystem": "Injecție / Rampă",
+  "severity": "Pornire grea / Risc oprire",
+  "desc": "Senzor presiune rampă combustibil (FRP) — defecțiune circuit",
+  "explanation": "Semnal lipsă sau eronat de la senzorul de presiune de pe rampă.",
+  "causes": "Senzor presiune rampă defect, mufă cu contact imperfect, fire rupte.",
+  "symptoms": "Motorul pornește foarte greu sau se oprește brusc în mers.",
+  "action": "Inspectează mufa de pe capătul rampei Common Rail și citește presiunea la automat."
+ }
+]

@@ -1,0 +1,5 @@
+# Local dev artifacts
+*.log
+.DS_Store
+node_modules/
+*.swp
