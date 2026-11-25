@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1A1A2E">
-<meta name="description" content="Atelier Auto - Cauta si interpreteaza codurile de eroare OBD2 pentru Mercedes-Benz, Renault si Volkswagen">
+<meta name="description" content="Garaj / Diagnoză Auto - Caută și interpretează codurile de eroare OBD2 pentru Mercedes-Benz, Renault și Volkswagen">
 <title>Garaj / Diagnoză Auto</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="manifest" href="manifest.json">
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').then(reg => {
       console.log('[PWA] Service Worker registered:', reg.scope);
@@ -18,14 +17,177 @@
   });
 }
 </script>
+<style>
+:root{
+  --bg:#1A1A2E;
+  --bg-card:#242440;
+  --bg-input:#1E1E3A;
+  --text:#E8E8F0;
+  --text-muted:#9A9AB0;
+  --border:#3A3A5A;
+  --green:#2E8B57;
+  --green-bg:#1A3D2E;
+  --yellow:#E8A33D;
+  --yellow-bg:#3D2E0E;
+  --cyan:#00B4D8;
+  --cyan-bg:#0A2A36;
+  --orange:#E07B39;
+  --red:#E06B5E;
+  --blue:#4A90D9;
+  --radius:12px;
+  --shadow:0 2px 12px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--text);font-size:15px;line-height:1.45;
+  padding-bottom:calc(60px + env(safe-area-inset-bottom,0px));
+}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--green)}
+
+header.app-header{
+  position:sticky;top:0;z-index:40;
+  background:linear-gradient(135deg,var(--bg) 0%,#16162E 100%);
+  color:var(--text);padding:12px 14px;box-shadow:var(--shadow);
+}
+.header-row{display:flex;align-items:center;gap:12px;max-width:1100px;margin:0 auto}
+.brand-mark{width:44px;height:44px;flex:none;border-radius:10px;background:linear-gradient(135deg,#2E8B57,#1B5E20);display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.2)}
+.brand-text{flex:1;min-width:0}
+.brand-text h1{margin:0;font-size:18px;font-weight:800;letter-spacing:.2px}
+.brand-text p{margin:1px 0 0;font-size:11px;color:var(--text-muted);letter-spacing:.6px;text-transform:uppercase}
+.header-actions{display:flex;gap:6px;flex:none}
+.hdr-btn{
+  border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);
+  color:var(--text);border-radius:8px;padding:8px 10px;font-size:12px;font-weight:650;
+  display:flex;align-items:center;gap:7px;min-width:48px;
+}
+.hdr-btn:active{background:rgba(255,255,255,.12)}
+.hdr-btn svg{width:17px;height:17px}
+
+main.container{max-width:1100px;margin:0 auto;padding:14px}
+.tab-bar{
+  display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--border);margin-bottom:12px;overflow-x:auto;
+}
+.tab-btn{
+  background:var(--bg-card);border:1px solid var(--border);border-bottom:2px solid transparent;
+  color:var(--text-muted);padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;gap:8px;border-radius:10px 10px 0 0;white-space:nowrap;flex:none;
+}
+.tab-btn svg{width:18px;height:18px}
+.tab-btn.active{
+  color:var(--text);border-bottom-color:var(--green);
+  background:linear-gradient(180deg,#2A3A5A,var(--bg-card));
+}
+
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}
+.card h2{font-size:15px;font-weight:800;color:var(--text);margin:0 0 10px;letter-spacing:.2px}
+.card p{font-size:13px;color:var(--text-muted);margin:8px 0}
+
+.selector-card .brand-options{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.brand-btn{
+  background:var(--bg-input);border:1px solid var(--border);color:var(--text);
+  padding:10px 14px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;gap:8px;flex:1 1 140px;text-align:center;
+}
+.brand-btn.active{background:#3A3A6A;border-color:var(--green);color:var(--green)}
+.brand-btn svg{width:18px;height:18px;flex:none}
+.brand-btn[data-brand="all"]{border-color:var(--green);background:#2A3A5A}
+.brand-btn[data-brand="all"].active{border-color:var(--green);background:#2A3A5A;color:var(--green)}
+.brand-btn[data-brand="mb"]{border-color:#4A90D9;background:#2A3A6A}
+.brand-btn[data-brand="mb"].active{border-color:#4A90D9;background:#2A3A6A;color:#4A90D9}
+.brand-btn[data-brand="ro"]{border-color:#E8A33D;background:#3D2E0E}
+.brand-btn[data-brand="ro"].active{border-color:#E8A33D;background:#3D2E0E;color:#E8A33D}
+.brand-btn[data-brand="vw"]{border-color:#00B4D8;background:#0A2A36}
+.brand-btn[data-brand="vw"].active{border-color:#00B4D8;background:#0A2A36;color:#00B4D8}
+
+.search-card .search-bar{display:flex;align-items:center;border:1px solid var(--border);border-radius:10px;background:var(--bg-input);gap:8px;padding:10px 14px}
+.search-bar input{flex:1;background:transparent;border:0;outline:none;font-size:14px;color:var(--text)}
+.search-bar input::placeholder{color:var(--text-muted)}
+
+.results-card .results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.results-header h2{margin:0;font-size:15px;color:var(--text)}
+.results-header .count{font-size:13px;color:var(--text-muted);font-weight:600}
+
+.results-list{display:grid;gap:10px;min-height:120px}
+.code-card{
+  background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px;display:flex;flex-direction:column;gap:8px;cursor:pointer;
+}
+.code-card:hover{border-color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.code-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.code-badge{
+  font-size:16px;font-weight:800;letter-spacing:.5px;padding:4px 10px;border-radius:6px;
+  background:var(--bg);color:var(--text);min-width:80px;text-align:center;
+}
+.brand-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.3px}
+.brand-tag[data-brand="mb"]{background:#4A90D9;color:#fff}
+.brand-tag[data-brand="ro"]{background:#E8A33D;color:#fff}
+.brand-tag[data-brand="vw"]{background:#00B4D8;color:#fff}
+.brand-tag[data-brand="all"]{background:#2E8B57;color:#fff}
+.subsystem-label{font-size:11px;color:var(--text-muted);font-weight:600}
+.code-desc{font-size:13px;color:var(--text);margin:0}
+.code-severity{font-size:12px;font-weight:700}
+.severity-alta{background:#E06B5E;color:#fff;padding:2px 7px;border-radius:10px}
+.severity-mare{background:#E07B39;color:#fff;padding:2px 7px;border-radius:10px}
+.severity-normal{background:#4A90D9;color:#fff;padding:2px 7px;border-radius:10px}
+.view-btn{
+  margin-top:8px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;
+  background:var(--green);color:#fff;border:0;cursor:pointer;
+}
+.view-btn:hover{background:#267348}
+
+.login-card{
+  margin-top:20px;display:none;
+}
+.login-card.active{display:block}
+.login-card h2{font-size:16px;font-weight:800;color:var(--text);margin:0 0 12px}
+.login-card .input-group{margin-bottom:12px}
+.login-card label{font-size:13px;color:var(--text-muted);font-weight:650;display:block;margin-bottom:6px}
+.login-card input{
+  width:100%;padding:12px 14px;background:var(--bg-input);border:1px solid var(--border);
+  border-radius:8px;font-size:15px;color:var(--text);outline:none;
+}
+.login-card input:focus{border-color:var(--green)}
+.login-card .error{color:#E06B5E;font-size:13px;margin-top:4px;display:none}
+.login-card .btn-row{display:flex;gap:8px}
+.login-card .btn-primary{background:var(--green);color:#fff;border:0;padding:10px 18px;border-radius:8px;font-size:15px;font-weight:750;flex:1}
+.login-card .btn-secondary{background:transparent;border:1px solid var(--border);color:var(--text);padding:10px 18px;border-radius:8px;font-size:15px;font-weight:750}
+
+.modal{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal.open{display:flex}
+.modal-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;max-width:500px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.4);
+}
+.modal-card h2{font-size:17px;font-weight:800;color:var(--text);margin:0 0 16px}
+.modal-body fieldset{display:flex;flex-direction:column;gap:10px;width:100%}
+.modal-body label{font-size:13px;color:var(--text-muted);font-weight:650;display:block}
+.modal-body input, .modal-body textarea, .modal-body select{
+  padding:10px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;
+  font-size:14px;color:var(--text);outline:none;width:100%;
+}
+.modal-body input:focus, .modal-body textarea:focus, .modal-body select:focus{border-color:var(--green)}
+.modal-body textarea{min-height:80px;resize:vertical}
+.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+
+@media (max-width:600px){
+  .brand-btn{flex:1 1 100%}
+}
+</style>
 </head>
 <body>
 <header class="app-header">
   <div class="header-row">
     <div class="brand-mark">&#128313;</div>
     <div class="brand-text">
-      <h1>Atelier Auto</h1>
-      <p>Cauta si interpreteaza coduri OBD2</p>
+      <h1>Garaj / Diagnoză Auto</h1>
+      <p>Caută și interpretează codurile de eroare OBD2</p>
     </div>
     <button id="journal-btn" class="hdr-btn" title="Jurnalul meu de cercetare">
       <span id="journal-count">0</span>
@@ -35,19 +197,32 @@
 </header>
 
 <main class="container">
-  <div class="selector-card">
-    <div class="brand-options" id="brand-options">
-      <button class="brand-btn active" data-brand="all">TOATE (OBD2 general)</button>
-      <button class="brand-btn" data-brand="mb">&#127918; Mercedes-Benz (MB)</button>
-      <button class="brand-btn" data-brand="ro">&#127964; Renault (DFxxx)</button>
-      <button class="brand-btn" data-brand="vw">&#127915; Volkswagen / VAG</button>
+  <div class="tab-bar">
+      <div class="login-card" id="login-card">
+        <h2>&#128273; Autentificare</h2>
+        <div class="input-group">
+          <label for="auth-pin">Cod PIN</label>
+          <input type="password" id="auth-pin" maxlength="4" placeholder="Ex: 1234" autocomplete="off">
+        </div>
+        <div class="error" id="auth-error">Cod incorect.</div>
+        <div class="btn-row">
+          <button class="btn-primary" id="auth-submit">Accesează</button>
+          <button class="btn-secondary" id="auth-cancel">Anulare</button>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:10px">Codul PIN este salvat local pe telefon după prima autentificare.</p>
+      </div>
+      <div class="brand-options" id="brand-options">
+        <button class="brand-btn active" data-brand="all">TOATE (OBD2 general)</button>
+        <button class="brand-btn" data-brand="mb">Mercedes-Benz (MB)</button>
+        <button class="brand-btn" data-brand="ro">Renault (DFxxx)</button>
+        <button class="brand-btn" data-brand="vw">Volkswagen / VAG</button>
+      </div>
     </div>
-  </div>
 
   <div class="search-card">
     <div class="search-bar">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="search-input" placeholder="Cauta cod (ex: P0300, DF053, 17965) sau cuvant cheie (turbina, EGR, DPF...)">
+      <input type="text" id="search-input" placeholder="Caută cod (ex: P0300, DF053, 17965) sau cuvânt cheie (turbină, EGR, DPF...)">
     </div>
   </div>
 
@@ -57,13 +232,13 @@
       <span id="total-count">0</span>
     </div>
     <div class="results-list" id="results-list">
-      <div class="loading">Incarcare...</div>
+      <div class="loading">Se încarcă...</div>
     </div>
   </div>
 </main>
 
-<footer class="app-footer">
-  <p>Atelier Auto - Coduri OBD &copy; 2026 | PWA complet offline</p>
+<footer class="app-footer" style="text-align:center;padding:12px;background:var(--bg);color:var(--text-muted);font-size:12px">
+  Garaj / Diagnoză Auto &copy; 2026 | PWA complet offline &bull; Dezvoltat pentru garajele auto
 </footer>
 
 <div id="journal-modal" class="modal">
@@ -77,7 +252,7 @@
         <span id="journal-count">0</span> intrari salvate
       </div>
       <div id="journal-list" class="journal-list">
-        <div class="empty-journal">Niciun cod adaugat inca. Adauga unul mai jos!</div>
+        <div class="empty-journal">Niciun cod adăugat încă. Adaugă unul mai jos!</div>
       </div>
       <div class="journal-entry">
         <input type="text" id="journal-code" placeholder="Cod OBD (ex: P0300, DF053, 17965)">
@@ -89,39 +264,6 @@
         </select>
         <textarea id="journal-note" placeholder="Notițe personale..."></textarea>
         <button id="journal-save" class="btn-primary">&#128190; Salvează</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="detail-modal" class="modal">
-  <div class="modal-content detail-modal">
-    <div class="modal-header">
-      <h2 id="detail-code">Cod OBD</h2>
-      <button id="detail-close" class="close-btn">&#10005;</button>
-    </div>
-    <div class="modal-body detail-body">
-      <div class="detail-code-badge" id="detail-badge">P0300</div>
-      <div class="detail-brand" id="detail-brand">TOATE</div>
-      <div class="detail-field">
-        <span class="field-label">Descriere:</span>
-        <p id="detail-desc"></p>
-      </div>
-      <div class="detail-field">
-        <span class="field-label">Explicatie:</span>
-        <p id="detail-explanation"></p>
-      </div>
-      <div class="detail-field">
-        <span class="field-label">Cauze probabile:</span>
-        <ul id="detail-causes"></ul>
-      </div>
-      <div class="detail-field">
-        <span class="field-label">Simptome:</span>
-        <ul id="detail-symptoms"></ul>
-      </div>
-      <div class="detail-field">
-        <span class="field-label">Pasul de verificare:</span>
-        <p id="detail-action"></p>
       </div>
     </div>
   </div>

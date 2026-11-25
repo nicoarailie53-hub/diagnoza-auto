@@ -1,24 +1,24 @@
 // Atelier Auto - Coduri OBD - Application logic
+// Datele sunt încărcate direct din CODURI_OBD (definit în codes.js, înainte de acest fișier)
+
 let currentData = { categories: [], codes: [] };
 let currentBrandFilter = 'all';
 let searchQuery = '';
 let journalEntries = [];
+let expandedCode = null;
 
-// Load codes from JSON
-async function loadCodes() {
-  try {
-    const response = await fetch('data/codes.json');
-    if (!response.ok) throw new Error('Failed to load codes');
-    currentData = await response.json();
+// Încarcă datele din CODURI_OBD (definit în codes.js, sincron)
+function loadCodes() {
+  if (typeof CODURI_OBD !== 'undefined' && CODURI_OBD.codes) {
+    currentData = CODURI_OBD;
     renderResults();
     updateJournalCount();
-  } catch (error) {
-    console.error('Error loading codes:', error);
-    document.getElementById('results-list').innerHTML = '<div class="error">Eroare la incarcare. Verifica conexiunea.</div>';
+  } else {
+    document.getElementById('results-list').innerHTML = '<div class="error">Eroare la încărcare. Repornește pagina.</div>';
   }
 }
 
-// Get filtered and searched codes
+// Filtrează și caută coduri
 function getFilteredCodes() {
   let codes = currentData.codes.filter(c => {
     if (currentBrandFilter !== 'all' && c.brand !== currentBrandFilter) return false;
@@ -35,7 +35,7 @@ function getFilteredCodes() {
   return codes;
 }
 
-// Render results
+// Afișează rezultatele cu accordeon detalii
 function renderResults() {
   const codes = getFilteredCodes();
   const list = document.getElementById('results-list');
@@ -45,73 +45,100 @@ function renderResults() {
   count.textContent = codes.length;
   
   if (codes.length === 0) {
-    list.innerHTML = '<div class="empty">Niciun cod gasit. Schimba filtrele sau cautarea.</div>';
+    list.innerHTML = '<div class="empty">Niciun cod găsit. Schimbă filtrele sau căutarea.</div>';
     title.textContent = '0 rezultate';
     return;
   }
   
   title.textContent = codes.length + ' rezultate';
-  list.innerHTML = codes.map(c => {
-    const severityClass = c.severity ? 'severity-' + c.severity.toLowerCase() : 'severity-normal';
-    return `
-      <div class="code-card" data-code="${c.code}" data-brand="${c.brand}">
-        <div class="code-header">
-          <span class="code-badge ${severityClass}">${c.code}</span>
-          <span class="brand-tag">${c.brand}</span>
-          <span class="subsystem-label">${c.subsystem}</span>
-        </div>
-        <p class="code-desc">${c.desc}</p>
-        <p class="code-severity">${c.severity}</p>
-        <button class="view-btn" data-code="${c.code}">Vezi detalii completa</button>
-      </div>
-    `;
-  }).join('');
   
+  const severityClassMap = {
+    'ridicată': 'alta',
+    'medie': 'mare',
+    'scăzută': 'normal'
+  };
+  
+  list.innerHTML = codes.map(c => {
+    const severityKey = (c.severity || '').toLowerCase();
+    const severityClass = severityClassMap[severityKey] || 'normal';
+    const brandColor = c.brand === 'MB' ? '#4A90D9' : (c.brand === 'RO' ? '#E8A33D' : (c.brand === 'VW' ? '#00B4D8' : '#2E8B57'));
+    const isExpanded = expandedCode === c.code;
+    const detailsHtml = buildDetailsHtml(c);
+    const buttonText = isExpanded ? 'Ascunde detalii' : 'Vezi detalii complete';
+    
+    return \`
+      <div class="code-card" data-code="\${c.code}" data-brand="\${c.brand}">
+        <div class="code-header">
+          <span class="code-badge severity-\${severityClass}">\${c.code}</span>
+          <span class="brand-tag" style="background:\${brandColor};color:#fff">\${c.brand}</span>
+          <span class="subsystem-label">\${c.subsystem}</span>
+        </div>
+        <p class="code-desc">\${c.desc}</p>
+        <p class="code-severity"><span class="severity-\${severityClass}">\${c.severity}</span></p>
+        <button class="view-btn" data-code="\${c.code}">\${buttonText}</button>
+        <div class="code-details \${isExpanded ? 'expanded' : ''}" data-code="\${c.code}">
+          \${detailsHtml}
+        </div>
+      </div>
+    \`;
+  }).join('');
+
   document.querySelectorAll('.view-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const code = btn.dataset.code;
-      openDetailModal(code);
-    });
-  });
-  
-  document.querySelectorAll('.code-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const code = card.dataset.code;
-      openDetailModal(code);
+      toggleDetail(code);
     });
   });
 }
 
-// Open detail modal
-function openDetailModal(code) {
-  const item = currentData.codes.find(c => c.code === code);
-  if (!item) return;
-  
-  document.getElementById('detail-code').textContent = item.code;
-  document.getElementById('detail-badge').textContent = item.code;
-  document.getElementById('detail-badge').className = `detail-code-badge severity-${item.severity.toLowerCase()}`;
-  document.getElementById('detail-brand').textContent = item.brand;
-  document.getElementById('detail-desc').textContent = item.desc;
-  document.getElementById('detail-explanation').textContent = item.explanation;
-  
-  const causesList = document.getElementById('detail-causes');
-  causesList.innerHTML = item.causes ? item.causes.map(c => `<li>${c}</li>`).join('') : '';
-  
-  const symptomsList = document.getElementById('detail-symptoms');
-  symptomsList.innerHTML = item.symptoms ? item.symptoms.map(s => `<li>${s}</li>`).join('') : '';
-  
-  document.getElementById('detail-action').textContent = item.action || '';
-  
-  document.getElementById('detail-modal').style.display = 'flex';
-  
-  document.getElementById('detail-modal').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) {
-      closeDetailModal();
-    }
+// Toggle detail section for a code
+function toggleDetail(code) {
+  if (expandedCode === code) {
+    expandedCode = null;
+  } else {
+    expandedCode = code;
+  }
+  const details = document.querySelectorAll('.code-details');
+  details.forEach(d => {
+    const card = d.closest('.code-card');
+    card.style.borderColor = (d.classList.contains('expanded') ? '#2E8B57' : '#3A3A5A');
+    d.classList.toggle('expanded');
   });
+  // Re-render results to update button text
+  renderResults();
 }
 
-// Close detail modal
+// Build details HTML for a code
+function buildDetailsHtml(c) {
+  return \`
+    <div class="detail-field">
+      <span class="field-label">Descriere:</span>
+      <p class="detail-text">\${c.desc}</p>
+    </div>
+    <div class="detail-field">
+      <span class="field-label">Explicație:</span>
+      <p class="detail-text">\${c.explanation}</p>
+    </div>
+    <div class="detail-field">
+      <span class="field-label">Cauze probabile:</span>
+      <ul class="detail-list">
+        \${c.causes ? c.causes.map(cauza => \`<li>\${cauza}</li>\`).join('') : ''}
+      </ul>
+    </div>
+    <div class="detail-field">
+      <span class="field-label">Simptome:</span>
+      <ul class="detail-list">
+        \${c.symptoms ? c.symptoms.map(s => \`<li>\${s}</li>\`).join('') : ''}
+      </ul>
+    </div>
+    <div class="detail-field">
+      <span class="field-label">Pași de verificare:</span>
+      <p class="detail-text">\${c.action || ''}</p>
+    </div>
+  \`;
+}
+
+// Close detail modal (legacy)
 function closeDetailModal() {
   document.getElementById('detail-modal').style.display = 'none';
 }
@@ -124,6 +151,7 @@ document.querySelectorAll('.brand-btn').forEach(btn => {
     currentBrandFilter = btn.dataset.brand;
     searchQuery = '';
     document.getElementById('search-input').value = '';
+    expandedCode = null;
     renderResults();
   });
 });
@@ -131,6 +159,7 @@ document.querySelectorAll('.brand-btn').forEach(btn => {
 // Search input
 document.getElementById('search-input').addEventListener('input', (e) => {
   searchQuery = e.target.value;
+  expandedCode = null;
   renderResults();
 });
 
@@ -168,7 +197,7 @@ document.getElementById('journal-save').addEventListener('click', () => {
   document.getElementById('journal-code').value = '';
   document.getElementById('journal-note').value = '';
   
-  alert('Codul a fost adaugat in jurnal!');
+  alert('Codul a fost adăugat în jurnal!');
 });
 
 function loadJournal() {
@@ -183,21 +212,21 @@ function loadJournal() {
   count.textContent = journalEntries.length;
   
   if (journalEntries.length === 0) {
-    list.innerHTML = '<div class="empty-journal">Niciun cod adaugat inca. Adauga unul mai jos!</div>';
+    list.innerHTML = '<div class="empty-journal">Niciun cod adăugat încă. Adaugă unul mai jos!</div>';
     return;
   }
   
-  list.innerHTML = journalEntries.map((entry, index) => `
+  list.innerHTML = journalEntries.map((entry, index) => \`
     <div class="journal-item">
       <div class="journal-item-header">
-        <span class="journal-code">${entry.code}</span>
-        <span class="journal-brand">${entry.brand}</span>
-        <span class="journal-date">${new Date(entry.timestamp).toLocaleString('ro-RO')}</span>
-        <button class="delete-btn" data-index="${index}">&#10005;</button>
+        <span class="journal-code">\${entry.code}</span>
+        <span class="journal-brand">\${entry.brand}</span>
+        <span class="journal-date">\${new Date(entry.timestamp).toLocaleString('ro-RO')}</span>
+        <button class="delete-btn" data-index="\${index}">&#10005;</button>
       </div>
-      <p class="journal-note">${entry.note || ''}</p>
+      <p class="journal-note">\${entry.note || ''}</p>
     </div>
-  `).join('');
+  \`).join('');
   
   document.querySelectorAll('.delete-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -221,8 +250,17 @@ function updateJournalCount() {
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    document.getElementById('detail-modal').style.display = 'none';
     document.getElementById('journal-modal').style.display = 'none';
+    if (expandedCode) {
+      const code = expandedCode;
+      expandedCode = null;
+      const details = document.querySelector(`.code-details[data-code="\${code}"]`);
+      if (details) {
+        details.classList.remove('expanded');
+        const card = details.closest('.code-card');
+        card.style.borderColor = '#3A3A5A';
+      }
+    }
   }
 });
 

@@ -1,5 +1,5 @@
 ﻿// Service Worker for Atelier Auto - Coduri OBD PWA
-const CACHE_NAME = 'diagnoza-auto-v1';
+const CACHE_NAME = 'diagnoza-auto-v4';
 const STATIC_ASSETS = [
   './', './index.html', './manifest.json', './favicon.svg',
   './media/icon-192.png', './media/icon-512.png',
@@ -32,15 +32,20 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.includes('/api/') || url.pathname.endsWith('.json')) return;
+
+  // Network-First strategy for all same-origin requests
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) return cachedResponse;
-      return fetch(request).catch(() => {
-        if (request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-        return null;
+    fetch(request).then((response) => {
+      // Cache fresh response for offline use
+      const responseClone = response.clone();
+      caches.open(CACHE_NAME).then((cache) => {
+        cache.put(request, responseClone);
+      });
+      return response;
+    }).catch(() => {
+      // Network failed, fall back to cache
+      return caches.match(request).then((cached) => {
+        return cached || null;
       });
     })
   );
