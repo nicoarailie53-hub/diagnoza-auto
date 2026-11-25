@@ -4,301 +4,199 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Diagnoză Auto Pro — Coduri Eroare OBD2 & OEM</title>
-  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e293b">
   <style>
-    :root {
-      --slate: #1e293b;
-      --slate-light: #334155;
-      --navy: #0284c7;
-      --amber: #d97706;
-      --amber-dark: #b45309;
-      --royal: #1d4ed8;
-      --purple: #6d28d9;
-      --orange: #b45309;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
-      --text-light: #64748b;
-      --border: #e2e8f0;
-      --shadow: 0 1px 3px rgba(0,0,0,0.12);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    header {
-      background: var(--slate);
-      color: white;
-      padding: 1.5rem 1rem;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    header h1 span { color: #38bdf8; }
-    main {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 1.5rem 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .search-box {
-      width: 100%;
-      padding: 0.9rem 1rem;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      font-size: 1rem;
-      background: var(--card-bg);
-      transition: border-color 0.2s;
-    }
-    .search-box:focus {
-      outline: none;
-      border-color: var(--slate);
-      box-shadow: 0 0 0 3px rgba(30,41,59,0.1);
-    }
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .tab {
-      border: 2px solid transparent;
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 0.9rem;
-      color: white;
-      transition: 0.15s;
-    }
-    .tab.active {
-      opacity: 1;
-      border-color: white;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    }
-    .tab-TOATE { background: #475569; }
-    .tab-MB { background: #0284c7; }
-    .tab-RENOULT { background: #d97706; }
-    .tab-RENOULT.active { color: white; }
-    .tab-VW { background: #1d4ed8; }
-    .tab-PIECE { background: #6d28d9; }
-    .tab-ELEC { background: #b45309; }
-    .tab.active { opacity: 1; border-color: #fff; transform: translateY(-1px); }
-    .tab:hover { opacity: 0.9; }
-    .tab.active { opacity: 1; border-color: #fff; transform: translateY(-1px); }
-    .results {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: Segoe UI, system-ui, sans-serif; background:#f8fafc; color:#1e293b; }
+    header { background:#1e293b; color:white; padding:1rem; text-align:center; }
+    header h1 { font-size:1.25rem; font-weight:700; }
+    header h1 span { color:#38bdf8; }
+    main { max-width:1000px; margin:0 auto; padding:1rem; }
+    .search-box { width:100%; padding:0.8rem 1rem; border:2px solid #334155; border-radius:10px; font-size:1rem; background:#1e293b; color:white; }
+    .search-box:focus { outline:none; border-color:#38bdf8; }
+    .tabs { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem; }
+    .tab { border:2px solid transparent; padding:0.55rem 1rem; border-radius:8px; font-weight:700; cursor:pointer; font-size:0.85rem; color:white; transition:0.15s; }
+    .tab.active { opacity:1; border-color:#fff; transform:translateY(-1px); }
+    .tab-TOATE { background:#64748b; }
+    .tab-MB { background:#1e3a8a; }
+    .tab-RENAULT { background:#b45309; }
+    .tab-VW { background:#1d4ed8; }
+    .tab-PIECE { background:#6d28d9; }
+    .tab-ELEC { background:#b45309; }
+    .tab.active { box-shadow: 0 0 0 2px #fff; }
+    .tab.active.TOATE { background:#475569; }
+    .tab.active.MB { background:#1e3a8a; }
+    .tab.active.RENAULT { background:#b45309; }
+    .tab.active.VW { background:#1d4ed8; }
+    .tab.active.PIECE { background:#6d28d9; }
+    .tab.active.ELEC { background:#b45309; }
+    .no-results { padding:2rem; text-align:center; color:#64748b; }
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap:1rem; }
+    .card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; background:white; }
+    .card-top { display:flex; gap:0.5rem; margin-bottom:0.5rem; flex-wrap:wrap; }
+    .badge { display:inline-block; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; font-weight:700; color:white; text-transform:uppercase; }
+    .badge-cod { background:#3b82f6; }
+    .badge-marca { background:#64748b; }
+    .badge-sev { padding:0.25rem 0.4rem; }
+    .badge-sev-Ridicată { background:#ef4444; }
+    .badge-sev-Medie { background:#f59e0b; }
+    .badge-sev-Normală { background:#10b981; }
+    .titlu { font-weight:700; margin-bottom:0.5rem; }
+    .sec { background:#f1f5f9; padding:0.5rem; border-radius:4px; margin-bottom:0.5rem; }
+    .detalii { border-top:1px solid #e2e8f0; padding-top:0.5rem; display:none; }
+    .detalii.open { display:block; }
+    .causelist { display:grid; grid-template-columns: 1fr 1fr; gap:0.25rem; margin:0.25rem 0; }
+    .causelist span { background:#e0f2fe; color:#0369a1; padding:0.2rem 0.4rem; border-radius:3px; font-size:0.75rem; }
+    .btn-detalii { margin-top:0.5rem; padding:0.4rem 1rem; background:#3b82f6; color:white; border:none; border-radius:4px; cursor:pointer; font-size:0.8rem; }
+    .btn-detalii:hover { background:#2563eb; }
+    .status { padding:0.5rem; background:#dcfce7; color:#166534; border-radius:4px; font-size:0.85rem; margin-bottom:1rem; }
+    .status.error { background:#fee2e2; color:#991b1b; }
     @media (max-width: 600px) {
-      .results { grid-template-columns: 1fr; }
-      header h1 { font-size: 1.2rem; }
-    }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      transition: box-shadow 0.2s;
-    }
-    .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-    .card-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .badge-cod {
-      background: #e2e8f0;
-      color: #1e293b;
-    }
-    .badge-marca {
-      background: #cbd5e1;
-      color: #1e293b;
-    }
-    .badge-sev {
-      padding: 0.15rem 0.5rem;
-      border-radius: 12px;
-      font-size: 0.7rem;
-      font-weight: 700;
-    }
-    .badge-sev-Ridicată { background: #fee2e2; color: #b91c1c; }
-    .badge-sev-Medie { background: #fef3c7; color: #92400e; }
-    .badge-sev-Normală { background: #d1fae5; color: #065f46; }
-    .badge-sev-Riscul oprirea motorului { background: #fce7f3; color: #9d174d; }
-    .titlu {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .sec {
-      font-size: 0.92rem;
-      color: #334155;
-      margin-top: 0.25rem;
-    }
-    .causelist {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 0.6rem;
-    }
-    .causelist span {
-      background: #f1f5f9;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.82rem;
-    }
-    .detalii {
-      margin-top: 0.75rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--border);
-      display: none;
-    }
-    .detalii.open { display: block; }
-    .detalii p {
-      font-size: 0.85rem;
-      color: #334155;
-      margin: 0.3rem 0;
-    }
-    .btn-detalii {
-      margin-top: 0.75rem;
-      padding: 0.5rem 1rem;
-      background: var(--slate);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      width: 100%;
-      transition: 0.15s;
-    }
-    .btn-detalii:hover { background: #1e293b; }
-    .no-results {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-light);
-      grid-column: 1 / -1;
+      .row { grid-template-columns: 1fr; }
+      .causelist { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Diagnoză <span>Auto Pro</span> — Coduri Eroare OBD2 &amp; OEM</h1>
+    <h1>Diagnoză Auto Pro <span>— Coduri Eroare OBD2 & OEM</span></h1>
   </header>
   <main>
-    <input type="text" id="searchInput" class="search-box" placeholder="Caută după cod, titlu, sistem, simptome sau cauze...">
-    <div id="tabs" class="tabs">
-      <button class="tab tab-TOATE active" data-marca="TOATE">TOATE</button>
-      <button class="tab tab-MB" data-marca="MB">Mercedes-Benz</button>
-      <button class="tab tab-RENOULT" data-marca="RENOULT">Renault</button>
-      <button class="tab tab-VW" data-marca="VW">Volkswagen / VAG</button>
-      <button class="tab tab-PIECE" data-marca="PIECE">Piese Origine OEM</button>
-      <button class="tab tab-ELEC" data-marca="ELEC">Electrică &amp; Lumini</button>
+    <div id="status"></div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Caută după cod, titlu, sistem, simptom">
     </div>
-    <div id="results" class="results"></div>
+    <div class="tabs" id="tabs">
+      <button class="tab tab-TOATE active" data-marca="TOATE">TOATE</button>
+      <button class="tab tab-MB" data-marca="MB">MB / Mercedes-Benz</button>
+      <button class="tab tab-RENAULT" data-marca="RENOULT">RENOULT</button>
+      <button class="tab tab-VW" data-marca="VW">VW / VAG</button>
+      <button class="tab tab-PIECE" data-marca="PIECE" style="background:#6d28d9; color:white;">PIECE / Piese Origine OEM</button>
+      <button class="tab tab-ELEC" data-marca="ELEC" style="background:#b45309; color:white;">ELEC / Electrică & Lumini</button>
+    </div>
+    <div id="results"></div>
   </main>
-  <script>
-    function filterByMarca(c) {
-      const active = document.querySelector('.tab.active');
-      const marca = active ? active.dataset.marca : 'TOATE';
-      if (marca === 'TOATE') return true;
-      if (marca === 'ELEC') return c.marca === 'ELEC';
-      if (marca === 'PIECE') return c.marca === 'PIECE';
-      return c.marca === marca;
-    }
-    function filterBySearch(c, q) {
-      if (!q) return true;
-      q = q.toLowerCase();
-      return (
-        (c.cod || '').toLowerCase().includes(q) ||
-        (c.titlu || '').toLowerCase().includes(q) ||
-        (c.sistem || '').toLowerCase().includes(q) ||
-        (c.simptombe || '').toLowerCase().includes(q) ||
-        (c.cauze || []).some(x => x.toLowerCase().includes(q))
-      );
-    }
-    function renderResults() {
-      const input = document.getElementById('searchInput');
-      const q = input.value.trim();
-      const active = document.querySelector('.tab.active');
-      const marca = active ? active.dataset.marca : 'TOATE';
-      const filtered = CODURI.filter(c => {
-        if (marca !== 'TOATE' && c.marca !== marca) return false;
-        if (!filterBySearch(c, q)) return false;
-        return true;
-      });
-      const container = document.getElementById('results');
-      if (filtered.length === 0) {
-        container.innerHTML = '<div class="no-results">Nicio corespondență găsită.</div>';
-        return;
-      }
-      container.innerHTML = filtered.map(c => {
-        const sev = c.sev || 'Normală';
-        const cauzeHtml = (c.cauze || []).map(x => '<span>' + escapeHtml(x) + '</span>').join('');
-        return '' +
-          '<div class="card">' +
-            '<div class="card-top">' +
-              '<span class="badge badge-cod">' + escapeHtml(c.cod) + '</span>' +
-              '<span class="badge badge-marca">' + escapeHtml(c.marca) + '</span>' +
-              '<span class="badge badge-sev badge-sev-' + escapeHtml(sev) + '">' + escapeHtml(sev) + '</span>' +
-            '</div>' +
-            '<div class="titlu">' + escapeHtml(c.titlu) + '</div>' +
-            '<div class="sec"><strong>Descriere:</strong> ' + escapeHtml(c.exp) + '</div>' +
-            '<div class="detalii open">' +
-              '<p><strong>Explicație:</strong> ' + escapeHtml(c.exp) + '</p>' +
-              '<p><strong>Cauze probabile:</strong> <div class="causelist">' + cauzeHtml + '</div></p>' +
-              '<p><strong>Simptome:</strong> ' + escapeHtml(c.simptombe) + '</p>' +
-              '<p><strong>Pași de verificare:</strong> ' + escapeHtml(c.verif) + '</p>' +
-              '<button class="btn-detalii">Ascunde detalii</button>' +
-            '</div>' +
-          '</div>';
-      }).join('');
-    }
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, function(m) {
-        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
-      });
-    }
-    document.getElementById('searchInput').addEventListener('input', renderResults);
-    document.getElementById('tabs').addEventListener('click', function(e) {
-      const btn = e.target.closest('.tab');
-      if (!btn) return;
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      renderResults();
-    });
-    // Click handler for detalii button
-    document.getElementById('results').addEventListener('click', function(e) {
-      if (e.target.closest('.btn-detalii')) {
-        const btn = e.target.closest('.btn-detalii');
-        const detalii = btn.closest('.detalii');
-        detalii.classList.toggle('open');
-      }
-    });
+<script>
+const CODURI = [
+  { cod: "P0300", marca: "TOATE", sistem: "Motor / Aprindere", sev: "Ridicată", titlu: "Rateuri de aprindere (multi-cilindru)", exp: "Arderi complete detectate aleatoriu pe mai mulți cilindri.", cauze: ["Buji uzate","Bobine defecte","Inz. murdari"], simptome: "Motor trepida, pierde putere, consum crescut", verif: "Verifică bujii, bobinele și presiunea în raza de combustibil" },
+  { cod: "P0420", marca: "TOATE", sistem: "Evacuare / Catalizator", sev: "Medie", titlu: "Eficiență catalizator sub pragul admis", exp: "Sonda lambda de după catalizator arată că acesta nu mai filtrează corect.", cauze: ["Catalizator uzat","Sondă lambda 2 defectă"], simptome: "Emisii rosii, consum crescut, motor puternic", verif: "Compară valorile sondelor lambda 1 și 2" },
+  { cod: "P0440", marca: "TOATE", sistem: "Evapuare / EVAP", sev: "Medie", titlu: "Sistem EVAP - erori multiple", exp: "ECU detectează erori în circuitul gazelor de evaporație.", cauze: ["Canister EVAP blocat","Vălvă EVAP moartă"], simptome: "Motor pornește grele, bateria se descarcă, eroare EVAP", verif: "Verifică canisterul EVAP și circuitul de evacuare a golirii" },
+  { cod: "P0171", marca: "TOATE", sistem: "Admisie / Mixare", sev: "Ridicată", titlu: "Sistem prea închis (too lean) - Banc 1", exp: "Masa aerului este prea mare comparativ cu combustibilul.", cauze: ["Filtru motorină înfundat","Inz. cu retur mare"], simptome: "Pornire grea, consum crescut, putere redusă", verif: "Verifică filtru motorină și retur inz." },
+  { cod: "P0128", marca: "TOATE", sistem: "Motor / Răcire", sev: "Ridicată", titlu: "Temperatură răcire sub prag (termostat)", exp: "Motorul nu ajunge la temperatura de operare normală.", cauze: ["Termostat blocat închis","Senzor temperatură defect"], simptome: "Pornire grea la rece, consum crescut, emisii", verif: "Verifică funcționarea termostatului" },
+  { cod: "P0299", marca: "MB", sistem: "Turbine / Supraalimentare", sev: "Ridicată", titlu: "Presiune subreglarea supraalimentării", exp: "Turbinele nu produc suficientă supraalimentare pentru regimul cerut.", cauze: ["Furtun vacuum slăbit","Actuator VGT moart","Senzor presiune"], simptome: "Putere redusă, consum crescur, intră în Limp Mode", verif: "Verifică furtunul vacuum și activitatea actuatorului VGT" },
+  { cod: "P0455", marca: "MB", sistem: "Evapuare / EVAP", sev: "Medie", titlu: "Golire majoră sistem EVAP", exp: "Liberarea excesivă de gaze din rezervorul de combustibil spre evacuare.", cauze: ["Canister EVAP blocat","Vălvă EVAP moartă"], simptome: "Motor pornește grele, bateria se descarcă, eroare EVAP", verif: "Verifică canisterul EVAP și circuitul de evacuare a golirii" },
+  { cod: "P0456", marca: "MB", sistem: "Evapuare / EVAP", sev: "Normală", titlu: "Golire mică sistem EVAP", exp: "Pickă de gaze din rezervor recunoscută de către ECU.", cauze: ["Fugere mici în circuit EVAP","Conexiune EVAP ușor defectă"], simptome: "Eroare EVAP aprinsă, consum crescut", verif: "Inspecționează toate conexiunile EVAP" },
+  { cod: "P0411", marca: "MB", sistem: "EGR", sev: "Medie", titlu: "EGRu rece — debit prea scăzut", exp: "EGRu rece nu trăde la temperatura de referință, afectând reducerea poluăriilor.", cauze: ["EGRu arsă","Furră în canal EGR","Senzor EGR defect"], simptome: "Putere redusă, consum crescur, emisii neregulate", verif: "Verifică temperatura EGR cu senzor" },
+  { cod: "P0380", marca: "MB", sistem: "Preîncălzire", sev: "Medie", titlu: "Circuit bujii incandescente", exp: "Una sau mai multe bujii arse sau releul nu comandă.", cauze: ["Buji incandescente arse","Releu preîncălzire defect"], simptome: "Pornire grea la rece, buji neumplute", verif: "Măsoară rezistența fiecărei bujii cu multimetrul" },
+  { cod: "DF053", marca: "RENOULT", sistem: "Injecție 1.5 dCi", sev: "Ridicată", titlu: "Funcție reglare presiune rampă injecție", exp: "Presiunea în rampa Common Rail este peste sau sub limita cerută.", cauze: ["Regulator IMV blocat","Aer pe circuit","Inz. cu retur mare"], simptome: "Pornire grea, consum crescut, marcaj neregulat", verif: "Verifică bule de aer pe conducta transparentă de motorină" },
+  { cod: "DF025", marca: "RENOULT", sistem: "Preîncălzire", sev: "Medie", titlu: "Circuit releu / buji incandescente", exp: "Una sau mai multe bujii arse sau releul nu comandă.", cauze: ["Buji incandescente arse","Releu preîncălzire defect"], simptome: "Pornire grea la rece, buji neumplute", verif: "Măsoară rezistența fiecărei bujii cu multimetrul" },
+  { cod: "DF1012", marca: "RENOULT", sistem: "Preîncălzire", sev: "Medie", titlu: "Eroare circuit buji incandescente", exp: "Circuitul bujiilor este defect, afectând pornirea motorului.", cauze: ["Buji arși","Releu defect","Cablaj ROS"], simptome: "Pornire grea, buji neumplute", verif: "Verifică cablajele ROS și măsoară rezistența fiecărei bujii" },
+  { cod: "DF1011", marca: "RENOULT", sistem: "EGR", sev: "Medie", titlu: "Preluare EGR excesivă", exp: "EGRu preia prea multe gaze, reducând puterea și creștind consumul.", cauze: ["Valvă EGR moartă","Furră în canal EGR","Circuit EGR colmatat"], simptome: "Putere redusă, consum crescur, emisii neregulate", verif: "Spăla circuit EGR, verifică valvă și canalurile" },
+  { cod: "DF800", marca: "RENOULT", sistem: "Turbine", sev: "Medie", titlu: "Control geometrie variabilă turbină (VGT)", exp: "Sistemul de control al geometriei turbinelor nu funcționează corect.", cauze: ["Actuator VGT moart","Senzor presiune","Circuit comutare"], simptome: "Putere redusă, turbine intră în Limp Mode", verif: "Verifică semnalele actuatorului VGT cu diagnoticatorul" },
+  { cod: "17965", marca: "VW", sistem: "Turbine", sev: "Ridicată", titlu: "Presiune supraalimentare depășită (Overboost)", exp: "Supraalimentarea depășește limita de siguranță, adesea cauzată de blocare mecanică.", cauze: ["Electrovalvă N75 moartă","Galerie ADM blocată","Senzor presiune"], simptome: "Intră în Limp Mode până la repornire", verif: "Verifică electrovalvă N75 și semnalele senzorului de presiune" },
+  { cod: "17941", marca: "VW", sistem: "EGR", sev: "Medie", titlu: "EGRu — debit prea mare / EGR inactivat", exp: "EGRu trăde prea multe gaze sau nu este controlat corect.", cauze: ["Valvă EGR moartă","Senzor EGR defect","Circuit EGR"], simptome: "Putere redusă, consum crescur, emisii neregulate", verif: "Verifică valvă EGR și circuitul de comutare" },
+  { cod: "P0300", marca: "VW", sistem: "Motor / Aprindere", sev: "Ridicată", titlu: "Rateuri de aprindere (multi-cilindru)", exp: "Arderi complete detectate aleatoriu pe mai mulți cilindri.", cauze: ["Buji uzate","Bobine defecte","Inz. murdari"], simptome: "Motor trepida, pierde putere, martor aprins", verif: "Verifică bujii, bobinele și presiunea în raza de combustibil" },
+  { cod: "P0440", marca: "VW", sistem: "Evapuare / EVAP", sev: "Medie", titlu: "Sistem EVAP - erori multiple", exp: "ECU detectează erori în circuitul gazelor de evaporație.", cauze: ["Canister EVAP blocat","Vălvă EVAP moartă"], simptome: "Motor pornește grele, bateria se descarcă, eroare EVAP", verif: "Verifică canisterul EVAP și circuitul de evacuare a golirii" },
+  { cod: "P0420", marca: "VW", sistem: "Evacuare / Catalizator", sev: "Medie", titlu: "Eficiență catalizator sub pragul admis", exp: "Sonda lambda de după catalizator arată că acesta nu mai filtrează corect.", cauze: ["Catalizator uzat","Sondă lambda 2 defectă"], simptome: "Emisii rosii, consum crescut, motor puternic", verif: "Compară valorile sondelor lambda 1 și 2" },
+  { cod: "P2015", marca: "PIECE", sistem: "Admisie / Piese", sev: "Medie", titlu: "Senzor poziție clapete galerie admisie", exp: "Servomotorul sau tija clapetelor nu ajunge la poziția comandată.", cauze: ["Depuneri ulei","Tijă ruptă","Motoraș M55 defect"], simptome: "Pornire grea, consum crescut, motor trepida", verif: "Inspectează vizual tija de sub galeria de admisie" },
+  { cod: "P0380", marca: "PIECE", sistem: "Preîncălzire", sev: "Medie", titlu: "Circuit bujii incandescente", exp: "Una sau mai multe bujii arse sau releul nu comandă.", cauze: ["Buji incandescente arse","Releu defect"], simptome: "Pornire grea la rece, buji neumplute", verif: "Măsoară rezistența fiecărei bujii cu multimetrul" },
+  { cod: "DF1012", marca: "PIECE", sistem: "Preîncălzire", sev: "Medie", titlu: "Eroare circuit buji incandescente", exp: "Circuitul bujiilor este defect, afectând pornirea motorului.", cauze: ["Buji arși","Releu defect","Cablaj ROS"], simptome: "Pornire grea, buji neumplute", verif: "Verifică cablajele ROS și măsoară rezistența fiecărei bujii" },
+  { cod: "17941", marca: "PIECE", sistem: "EGR", sev: "Medie", titlu: "EGRu — debit prea mare / EGR inactivat", exp: "EGRu trăde prea multe gaze sau nu este controlat corect.", cauze: ["Valvă EGR moartă","Senzor EGR defect"], simptome: "Putere redusă, consum crescur, emisii", verif: "Verifică valvă EGR și circuitul de comutare" },
+  { cod: "P0100", marca: "PIECE", sistem: "Admisie / MAF", sev: "Ridicată", titlu: "Circuit senzor masă aer — întrerupt", exp: "Circuitul electric al senzorului de masă aer este întrerupt.", cauze: ["Cablaj MAF întreput","Senzor MAF moart","Conexiune oxidată"], simptome: "Pornire grea, motor trage greu, consum crescut", verif: "Verifică cablajele și conexiunea senzorului MAF" },
+  { cod: "P0605", marca: "ELEC", sistem: "Computer / ECU", sev: "Riscul oprirea motorului", titlu: "Eroare circuit ECU — defecțiune", exp: "Circuitul electric al ECU este întrerupt sau are scurtcircuit.", cauze: ["Muftă ECU defectă","Cablaje scurtcircuit","Alimentare instabilă"], simptome: "Motor se oprește brusc, ECU nu pornește", verif: "Verifică cablajele de alimentare la ECU" },
+  { cod: "P0645", marca: "ELEC", sistem: "Computer / ECU", sev: "Medie", titlu: "Sistem de alimentare ECU — tensiune prea mare", exp: "Tensiunea pe linia ECU depășește pragul maxim.", cauze: ["Furtun de masă","Cofă neizolată","Cablaj greșit"], simptome: "ECU renunță, motor se oprește", verif: "Verifică tensiunea la alimentarea ECU cu multimetru" },
+  { cod: "P0562", marca: "ELEC", sistem: "Motor / Surse de energie", sev: "Normală", titlu: "Tensiune scăzută la sursa de energie", exp: "Tensiunea la sursa de energie este scăzută, afectând performanța.", cauze: ["Baterie slăbă","Alternator defect","Cablaj greșit"], simptome: "Pornire grea, consum crescut, semnale instabile", verif: "Verifică bateria și alternatorul, cablajele și tensiunea" },
+  { cod: "P0560", marca: "ELEC", sistem: "Motor / Surse de energie", sev: "Normală", titlu: "Senzor tensiune sursă — defecțiune", exp: "Senzorul trimite date incorecte de tensiune.", cauze: ["Senzor moart","Cablaj oxidat","Conexiune defectă"], simptome: "Semnale incorecte, pornire grea", verif: "Verifică semnalele senzorului cu diagnotigatorul" },
+  { cod: "P0100", marca: "ELEC", sistem: "Admisie / MAF", sev: "Ridicată", titlu: "Circuit senzor masă aer — întrerupt", exp: "Circuitul electric al senzorului de masă aer este întrerupt.", cauze: ["Cablaj MAF întreput","Senzor MAF moart","Conexiune oxidată"], simptome: "Pornire grea, motor trage greu, consum crescut", verif: "Verifică cablajele și conexiunea senzorului MAF" },
+];
 
-    renderResults();
-  </script>
+function filterByMarca(c) {
+  const active = document.querySelector('.tab.active');
+  const marca = active ? active.dataset.marca : 'TOATE';
+  if (marca === 'TOATE') return true;
+  if (marca === 'ELEC') return c.marca === 'ELEC';
+  if (marca === 'PIECE') return c.marca === 'PIECE';
+  return c.marca === marca;
+}
+
+function filterBySearch(c, q) {
+  if (!q) return true;
+  q = q.toLowerCase();
+  return (
+    (c.cod || '').toLowerCase().includes(q) ||
+    (c.titlu || '').toLowerCase().includes(q) ||
+    (c.sistem || '').toLowerCase().includes(q) ||
+    (c.simptome || '').toLowerCase().includes(q) ||
+    (c.cauze || []).some(x => x.toLowerCase().includes(q))
+  );
+}
+
+function renderResults() {
+  const input = document.getElementById('searchInput');
+  const q = input.value.trim();
+  const active = document.querySelector('.tab.active');
+  const marca = active ? active.dataset.marca : 'TOATE';
+  const filtered = CODURI.filter(c => {
+    if (marca !== 'TOATE' && c.marca !== marca) return false;
+    if (!filterBySearch(c, q)) return false;
+    return true;
+  });
+  const container = document.getElementById('results');
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">Nicio corespondență găsită.</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(c => {
+    const sev = c.sev || 'Normală';
+    const cauzeHtml = (c.cauze || []).map(x => '<span>' + escapeHtml(x) + '</span>').join('');
+    return '' +
+      '<div class="card">' +
+        '<div class="card-top">' +
+          '<span class="badge badge-cod">' + escapeHtml(c.cod) + '</span>' +
+          '<span class="badge badge-marca">' + escapeHtml(c.marca) + '</span>' +
+          '<span class="badge badge-sev badge-sev-' + escapeHtml(sev) + '">' + escapeHtml(sev) + '</span>' +
+        '</div>' +
+        '<div class="titlu">' + escapeHtml(c.titlu) + '</div>' +
+        '<div class="sec"><strong>Descriere:</strong> ' + escapeHtml(c.exp) + '</div>' +
+        '<div class="detalii open">' +
+          '<p><strong>Explicație:</strong> ' + escapeHtml(c.exp) + '</p>' +
+          '<p><strong>Cauze probabile:</strong> <div class="causelist">' + cauzeHtml + '</div></p>' +
+          '<p><strong>Simptome:</strong> ' + escapeHtml(c.simptome) + '</p>' +
+          '<p><strong>Pași de verificare:</strong> ' + escapeHtml(c.verif) + '</p>' +
+          '<button class="btn-detalii">Vezi detalii</button>' +
+        '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function(m) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+  });
+}
+
+// Tab switching
+document.getElementById('tabs').addEventListener('click', function(e) {
+  const btn = e.target.closest('.tab');
+  if (!btn) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderResults();
+});
+
+// Search
+document.getElementById('searchInput').addEventListener('input', renderResults);
+
+// Detalii toggle
+document.getElementById('results').addEventListener('click', function(e) {
+  if (e.target.closest('.btn-detalii')) {
+    const btn = e.target.closest('.btn-detalii');
+    const detalii = btn.closest('.detalii');
+    detalii.classList.toggle('open');
+  }
+});
+
+renderResults();
+</script>
 </body>
 </html>
