@@ -271,7 +271,7 @@
               '<p><strong>Cauze probabile:</strong> <div class="causelist">' + cauzeHtml + '</div></p>' +
               '<p><strong>Simptome:</strong> ' + escapeHtml(c.simptombe) + '</p>' +
               '<p><strong>Pași de verificare:</strong> ' + escapeHtml(c.verif) + '</p>' +
-              '<button class="btn-detalii" onclick="this.parentElement.parentElement.querySelector('.detalii').classList.toggle('open')">Ascunde detalii</button>' +
+              '<button class="btn-detalii">Ascunde detalii</button>' +
             '</div>' +
           '</div>';
       }).join('');
@@ -289,6 +289,15 @@
       btn.classList.add('active');
       renderResults();
     });
+    // Click handler for detalii button
+    document.getElementById('results').addEventListener('click', function(e) {
+      if (e.target.closest('.btn-detalii')) {
+        const btn = e.target.closest('.btn-detalii');
+        const detalii = btn.closest('.detalii');
+        detalii.classList.toggle('open');
+      }
+    });
+
     renderResults();
   </script>
 </body>
