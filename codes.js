@@ -1,333 +1,372 @@
-// Garaj / Diagnoza Auto - Cozi OBD2 - incarca direct (fara fetch)
+// Garaj / Diagnoza Auto Pro - Cozi OBD2 & OEM
+// 30 real codes: 5 per category (TOATE, MB, RENAULT, VW, PIECE, ELEC)
 const CODURI = [
+
+  // === TOATE (OBD2) ===
   {
     cod: "P0300",
     marca: "TOATE",
     sistem: "Motor / Aprindere",
-    sev: "Ridicat\u0103",
+    sev: "Ridicată",
     titlu: "Rateuri de aprindere (multi-cilindru)",
-    exp: "Arderi incomplete detectate aleatoriu pe mai mul\u021bi cilindri.",
-    cauze: ["Bujii uzate","Bobine defecte","Inz. murdari"],
-    simptome: "[Motor trepideaz\u0103, Pierde putere, Martor aprins]",
-    verif: "[Bujii uzate, Bobine defecte, Inz. murdari]"
+    exp: "Eczema de arder incomplete detectate aleatoriu pe mai multi cilindri.",
+    cauze: ["Bujii uzate", "Bobine defecte", "Inz. murdari", "Structura motorului defecta"],
+    simptome: "Motor trepida, pierdere de putere, consum crescut, martor aprins",
+    verif: "Verifica bujii, bobinele si presiunea in raza de combustibil."
   },
+
   {
     cod: "P0420",
     marca: "TOATE",
     sistem: "Evacuare / Catalizator",
     sev: "Medie",
-    titlu: "Eficien\u021b\u0103 catalizator sub pragul admis (Banc 1)",
-    exp: "Sonda lambda de dup\u0103 catalizator arat\u0103 c\u0103 acesta nu mai filtreaz\u0103 corect.",
-    cauze: ["Catalizator uzat","Sondă lambda 2 defectă","Scăpări pe evacuare înainte de sondă"],
-    simptome: "[Emisii rosii, Consopt ridicat, Motor puternic]",
-    verif: "[Catalizator uzat, Sond\u0103 lambda 2 defect\u0103, Sc\u0103p\u0103ri pe evacuare \u00eenainte de sond\u0103]"
+    titlu: "Eficiență catalizator sub pragul admis (Banc 1)",
+    exp: "Sonda lambda de dupa catalizator arata ca aceasta nu mai filtreaza corect.",
+    cauze: ["Catalizator uzat", "Sondă lambda 2 defecta", "Scapari pe evacuare inaintea sondei"],
+    simptome: "Emisii rosii, consum crescut, motor puternic",
+    verif: "Compară valorile sondelor lambda 1 și 2 pe tester la reptile la calt."
   },
+
   {
     cod: "P0440",
     marca: "TOATE",
     sistem: "Evapuare / EVAP",
     sev: "Medie",
     titlu: "Sistem EVAP - erori multiple",
-    exp: "ECU detecteaz\u0103 erori \u00een circuitul gazelor de evapora\u021bie.",
-    cauze: ["Canister EVAP blocat","Vălvă EVAP defectă","Conduși EVAP rupși"],
-    simptome: "[Motor pornesc grele, Bateria se desc\u0103rc\u0103, Eroare EVAP aprins\u0103]",
-    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP defect\u0103, Condu\u0219i EVAP rup\u0219i]"
+    exp: "ECU deteaza erori in circuitul gazelor de evaporație.",
+    cauze: ["Canister EVAP blocat", "Valvă EVAP moartă", "Conduși EVAP răniți"],
+    simptome: "Motor pornește grele, bateria se descărcă, eroare EVAP aprinsă",
+    verif: "Verifică canisterul EVAP și circuitul de evacuare a golirii."
   },
+
   {
     cod: "P0171",
     marca: "TOATE",
     sistem: "Admisie / Mixare",
-    sev: "Ridicat\u0103",
-    titlu: "Sistem prea \u00eenchis (too lean) - Banc 1",
+    sev: "Ridicată",
+    titlu: "Sistem prea închis (too lean) - Banc 1",
     exp: "Masa aerului este prea mare comparativ cu combustibilul.",
-    cauze: ["Filtru motorină înfundat","Inz. cu retur mare","Aer pe circuit"],
-    simptome: "[Pornire grea, Consum crescut, Putere redus\u0103]",
-    verif: "[Filtru motorin\u0103 \u00eenfundat, Inz. cu retur mare, Aer pe circuit]"
+    cauze: ["Filtru motorină înfundat", "Inz. cu retur mare", "Aer pe circuit"],
+    simptome: "Pornire grea, consum crescut, putere redusă",
+    verif: "Verifică filtru motorină, retur inz. și dacă sunt bule pe circuitul de motorină."
   },
+
   {
     cod: "P0128",
     marca: "TOATE",
-    sistem: "Motor / R\u0103cire",
-    sev: "Ridicat\u0103",
-    titlu: "Temperatur\u0103 r\u0103cire sub prag (termostaat)",
-    exp: "Motorul nu ajunge la temperatura de operare normal\u0103.",
-    cauze: ["Termostaat blocat închis","Senzor temperatură defect","Răcire cu prea mult aer"],
-    simptome: "[Pornire grea la rece, Consum crescut, Emisii neregulate]",
-    verif: "[Termostaat blocat \u00eenchis, Senzor temperatur\u0103 defect, R\u0103cire cu prea mult aer]"
+    sistem: "Motor / Răcire",
+    sev: "Ridicată",
+    titlu: "Temperatură răcire sub prag (termostat)",
+    exp: "Motorul nu ajunge la temperatura de operare normală.",
+    cauze: ["Termostat blocat închis", "Senzor temperatură defect", "Răcire cu prea mult aer"],
+    simptome: "Pornire grea la rece, consum crescut, emisii neregulate",
+    verif: "Verifică funcționarea termostatului și senzorul de temperatură."
   },
+
+  // === MB / Mercedes-Benz ===
   {
     cod: "P0299",
     marca: "MB",
     sistem: "Turbine / Supraalimentare",
-    sev: "Ridicat\u0103",
-    titlu: "Presiune subreglarea supraaliment\u0103rii (underboost)",
-    exp: "Turbinele nu produc suficient\u0103 supraalimentare pentru regimul cerut.",
-    cauze: ["Furtun vacuum slăbit","Actuator VGT defect","Senzor presiune blocat"],
-    simptome: "[Putere redus\u0103, Consum crescur, Intr\u0103 \u00een Limp Mode]",
-    verif: "[Furtun vacuum sl\u0103bit, Actuator VGT defect, Senzor presiune blocat]"
+    sev: "Ridicată",
+    titlu: "Presiune subreglarea supraalimentării (underboost)",
+    exp: "Turbinele nu produc suficientă supraalimentare pentru regimul cerut.",
+    cauze: ["Furtun vacuum slăbit", "Actuator VGT moart", "Senzor presiune blocat"],
+    simptombe: "Putere redusă, consum crescur, intră în Limp Mode",
+    verif: "Verifică furtunul vacuum și activitatea actuatorului VGT."
   },
+
   {
     cod: "P0455",
     marca: "MB",
     sistem: "Evapuare / EVAP",
     sev: "Medie",
-    titlu: "Golire major\u0103 sistem EVAP",
-    exp: "Liberarea excesiv\u0103 de Gaze din rezervorul de combustibil c\u0103tre evacuare.",
-    cauze: ["Canister EVAP blocat","Vălvă EVAP defectă","Conduși EVAP rupși"],
-    simptome: "[Motor pornesc grele, Bateria se desc\u0103rc\u0103, Eroare EVAP aprins\u0103]",
-    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP defect\u0103, Condu\u0219i EVAP rup\u0219i]"
+    titlu: "Golire majoră sistem EVAP",
+    exp: "Liberarea excesivă de gaze din rezervorul de combustibil spre evacuare.",
+    cauze: ["Canister EVAP blocat", "Valvă EVAP moartă", "Conduși EVAP răniți"],
+    simptombe: "Motor pornește grele, bateria se descărcă, eroare EVAP aprinsă",
+    verif: "Verifică canisterul EVAP și circuitul de evacuare a golirii."
   },
+
   {
     cod: "P0456",
     marca: "MB",
     sistem: "Evapuare / EVAP",
-    sev: "Normal\u0103",
-    titlu: "Golire mic\u0103 sistem EVAP",
-    exp: "Pick\u0103 de gaze din rezervor recunoscut\u0103 de c\u0103tre ECU.",
-    cauze: ["Fugere mici în circuit EVAP","Conexiune EVAP ușor defectă","Freză obosită la conexiune EVAP"],
-    simptome: "[Eroare EVAP aprins\u0103, Consum crescut]",
-    verif: "[Fugere mici \u00een circuit EVAP, Conexiune EVAP u\u0219or defect\u0103, Frez\u0103 obosit\u0103 la conexiune EVAP]"
+    sev: "Normală",
+    titlu: "Golire mică sistem EVAP",
+    exp: "Pickă de gaze din rezervor recunoscută de către ECU.",
+    cauze: ["Fugere mici în circuit EVAP", "Conexiune EVAP ușor defectă", "Freză obosită la conexiune EVAP"],
+    simptombe: "Eroare EVAP aprinsă, consum crescut",
+    verif: "Inspecționează toate conexiunile EVAP pentru fugere mici."
   },
+
   {
     cod: "P0411",
     marca: "MB",
     sistem: "EGR",
     sev: "Medie",
-    titlu: "Supapă EGR rece \u2014 debit prea sc\u0103zut (P0411)",
-    exp: "Supapă EGR rece nu tr\u0103de la temperatura de referin\u021b\u0103, afect\u00e2nd reducerea polu\u0103riilor.",
-    cauze: ["Supapă EGR ars sau cuplu defect","Furră în canal EGR","Senzor de temperatură EGR defect"],
-    simptome: "[Putere redus\u0103, Consum crescur, Emisii neregulate]",
-    verif: "[Supapă EGR ars sau cuplu defect, Furr\u0103 \u00een canal EGR, Senzor de temperatur\u0103 EGR defect]"
+    titlu: "Supapă EGR rece — debit prea scăzut (P0411)",
+    exp: "Supapă EGR rece nu trăde la temperatura de referință, afectând reducerea poluăriilor.",
+    cauze: ["Supapă EGR arsă sau cuplu defect", "Furră în canal EGR", "Senzor de temperatură EGR defect"],
+    simptombe: "Putere redusă, consum crescur, emisii neregulate",
+    verif: "Verifică temperatura EGR cu senzor și spală circuitul."
   },
+
   {
     cod: "P0380",
     marca: "MB",
-    sistem: "Pre\u00eenc\u0103lzire",
+    sistem: "Preîncălzire",
     sev: "Medie",
-    titlu: "Circuit buji incandescente / releu pre\u00eenc\u0103lzire",
-    exp: "Una sau mai multe bujii arse sau releul nu comand\u0103.",
-    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
-    simptome: "[Pornire grea la rece, Bujii neumplute]",
-    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
+    titlu: "Circuit bujii incandescente / releu preîncălzire",
+    exp: "Una sau mai multe bujii arse sau releul nu comandă.",
+    cauze: ["Bujii incandescente arși", "Releu preîncălzire defect", "Cablaj oxidat"],
+    simptombe: "Pornire grea la rece, buji neumplute",
+    verif: "Măsoară rezistența fiecărei bujii cu multimetrul (trebuie să fie sub 1-2 Ohmi)."
   },
+
+  // === RENAULT ===
   {
     cod: "DF053",
     marca: "RENOULT",
-    sistem: "Injec\u021bie 1.5 dCi",
-    sev: "Ridicat\u0103",
-    titlu: "Func\u021bie reglare presiune ramp\u0103 injec\u021bie",
-    exp: "Presiunea \u00een rampa Common Rail este peste sau sub limita cerut\u0103.",
-    cauze: ["Regulator presiune pompă (IMV) blocat","Aer pe circuitul de motorină","Inontoare cu retur mare"],
-    simptome: "[Pornire grea, Consum crescut, Marcaj neregulat]",
-    verif: "[Regulator presiune pomp\u0103 (IMV) blocat, Aer pe circuitul de motorin\u0103, Inontoare cu retur mare]"
+    sistem: "Injecție 1.5 dCi",
+    sev: "Ridicată",
+    titlu: "Funcție reglare presiune rampă injecție",
+    exp: "Presiunea în rampa Common Rail este peste sau sub limita cerută.",
+    cauze: ["Regulator presiune pompă (IMV) blocat", "Aer pe circuitul de motorină", "Inontoare cu retur mare"],
+    simptombe: "Pornire grea, consum crescut, marcaj neregulat",
+    verif: "Verifică dacă sunt bule de aer pe conducta transparentă de motorină și fă testul de retur."
   },
+
   {
     cod: "DF025",
     marca: "RENOULT",
-    sistem: "Pre\u00eenc\u0103lzire",
+    sistem: "Preîncălzire",
     sev: "Medie",
-    titlu: "Circuit releu / buji incandescente",
-    exp: "Una sau mai multe bujii arse sau releul nu comand\u0103.",
-    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
-    simptome: "[Pornire grea la rece, Bujii neumplute]",
-    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
+    titlu: "Circuit releu / bujii incandescente",
+    exp: "Una sau mai multe bujii arse sau releul nu comandă.",
+    cauze: ["Bujii incandescente arși", "Releu preîncălzire defect", "Cablaj oxidat"],
+    simptombe: "Pornire grea la rece, buji neumplute",
+    verif: "Măsoară rezistența fiecărei bujii cu multimetrul (trebuie să fie sub 1-2 Ohmi)."
   },
+
   {
     cod: "DF1012",
     marca: "RENOULT",
-    sistem: "Pre\u00eenc\u0103lzire",
+    sistem: "Preîncălzire",
     sev: "Medie",
-    titlu: "Eroare circuit buji incandescente / releu pre\u00eenc\u0103lzire",
-    exp: "Circuitul bujiilor incandescente este defect, afect\u00e2nd pornirea motorului.",
-    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj de alimentare oxidat sau întrerupt"],
-    simptome: "[Pornire grea, Bujii neumplute]",
-    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj de alimentare oxidat sau întrerupt]"
+    titlu: "Eroare circuit bujii incandescente / releu preîncălzire",
+    exp: "Circuitul bujilor incandescente este defect, afectând pornirea motorului.",
+    cauze: ["Bujii incandescente arși", "Releu preîncălzire defect", "Cablaj de alimentare ROS defectiv"],
+    simptombe: "Pornire grea, buji neumplute",
+    verif: "Verifică cablajele ROS și măsoară rezistența fiecărei bujii."
   },
+
   {
     cod: "DF1011",
     marca: "RENOULT",
     sistem: "EGR",
     sev: "Medie",
-    titlu: "Preluare EGR excesiv\u0103",
-    exp: "Supapă EGR preia prea multe gaze, reduc\u00e2nd puterea \u0219i cre\u0219tind consumul.",
-    cauze: ["Valvă EGR defectă (se deschide prea mult)","Furră în canal EGR","Circuit EGR colmatat"],
-    simptome: "[Putere redus\u0103, Consum crescur, Emisii neregulate]",
-    verif: "[Valv\u0103 EGR defect\u0103 (se deschide prea mult), Furr\u0103 \u00een canal EGR, Circuit EGR colmatat]"
+    titlu: "Preluare EGR excesivă",
+    exp: "Supapa EGR preia prea multe gaze, reducând puterea și creștind consumul.",
+    cauze: ["Valvă EGR moartă (se deschide prea mult)", "Furră în canal EGR", "Circuit EGR colmatat"],
+    simptombe: "Putere redusă, consum crescur, emisii neregulate",
+    verif: "Spăla circuit EGR, verifică valvă și canalurile."
   },
+
   {
     cod: "DF800",
     marca: "RENOULT",
     sistem: "Turbine",
     sev: "Medie",
-    titlu: "Control geometrie variabil\u0103 turbin\u0103 (VGT)",
-    exp: "Sistemul de control al geometriei turbinelor nu func\u021bioneaz\u0103 corect.",
-    cauze: ["Actuator VGT defect","Senzor de presiune cameră de admisie","Circuit de comutare VGT defect"],
-    simptome: "[Putere redus\u0103, Turbine intr\u0103 \u00een Limp Mode]",
-    verif: "[Actuator VGT defect, Senzor de presiune camer\u0103 de admisie, Circuit de comutare VGT defect]"
+    titlu: "Control geometrie variabilă turbină (VGT)",
+    exp: "Sistemul de control al geometriei turbinelor nu funcționează corect.",
+    cauze: ["Actuator VGT moart", "Senzor de presiune cameră de admisie", "Circuit de comutare VGT defect"],
+    simptombe: "Putere redusă, turbine intră în Limp Mode",
+    verif: "Verifică cu diagnotigatorul semnalele actuatorului VGT și presiunea camerii de admisie."
   },
+
+  // === VW / VAG ===
   {
     cod: "17965",
     marca: "VW",
     sistem: "Turbine",
-    sev: "Ridicat\u0103",
-    titlu: "Presiune supraalimentare dep\u0103\u0219it\u0103 (Overboost)",
-    exp: "Supraalimentarea dep\u0103\u0219e\u0219te limita de siguran\u021b\u0103, adesea cauzat\u0103 de blocare mecanic\u0103.",
-    cauze: ["Electrovalvă N75 defectă","Galerie admisie blocată","Senzor de presiune de supraalimentare defect"],
-    simptome: "[Intr\u0103 \u00een Limp Mode p\u00e2n\u0103 la repornire]",
-    verif: "[Electrovalv\u0103 N75 defect\u0103, Galerie admisie blocat\u0103, Senzor de presiune de supraalimentare defect]"
+    sev: "Ridicată",
+    titlu: "Presiune supraalimentare depășită (Overboost)",
+    exp: "Supraalimentarea depășește limita de siguranță, adesea cauzată de blocare mecanică.",
+    cauze: ["Electrovalvă N75 moartă", "Galerie admisie blocată", "Senzor de presiune de supraalimentare defect"],
+    simptombe: "Intră în Limp Mode până la repornire",
+    verif: "Verifică electrovalvă N75 și semnalele senzorului de presiune de supraalimentare."
   },
+
   {
     cod: "17941",
     marca: "VW",
     sistem: "EGR",
     sev: "Medie",
-    titlu: "Supapă EGR \u2014 debit prea mare / EGR inactivat",
-    exp: "Supapă EGR tr\u0103de prea multe gaze sau nu este controlat corect.",
-    cauze: ["Valvă EGR defectă (se deschide prea mult)","Senzor de presiune EGR defect","Circuit de comutare EGR defect"],
-    simptome: "[Putere redus\u0103, Consum crescur, Emisii neregulate]",
-    verif: "[Valv\u0103 EGR defect\u0103 (se deschide prea mult), Senzor de presiune EGR defect, Circuit de comutare EGR defect]"
+    titlu: "Supapă EGR — debit prea mare / EGR inactivat",
+    exp: "Supapa EGR trăde prea multe gaze sau nu este controlat corect.",
+    cauze: ["Valvă EGR moartă (se deschide prea mult)", "Senzor de presiune EGR defect", "Circuit de comutare EGR defect"],
+    simptombe: "Putere redusă, consum crescur, emisii neregulate",
+    verif: "Verifică valvă EGR și circuitul de comutare."
   },
+
   {
     cod: "P0300",
     marca: "VW",
     sistem: "Motor / Aprindere",
-    sev: "Ridicat\u0103",
+    sev: "Ridicată",
     titlu: "Rateuri de aprindere (multi-cilindru) - VAG",
-    exp: "Arderi incomplete detectate aleatoriu pe mai mul\u021bi cilindri.",
-    cauze: ["Bujii uzate","Bobine defecte","Inz. murdari"],
-    simptome: "[Motor trepideaz\u0103, Pierde putere, Martor aprins]",
-    verif: "[Bujii uzate, Bobine defecte, Inz. murdari]"
+    exp: "Arderi incomplete detectate aleatoriu pe mai mulți cilindri.",
+    cauze: ["Bujii uzate", "Bobine defecte", "Inz. murdari"],
+    simptombe: "Motor trepida, pierde putere, martor aprins",
+    verif: "Verifică bujii, bobinele și presiunea în raza de combustibil."
   },
+
   {
     cod: "P0440",
     marca: "VW",
     sistem: "Evapuare / EVAP",
     sev: "Medie",
     titlu: "Sistem EVAP - erori multiple",
-    exp: "ECU detecteaz\u0103 erori \u00een circuitul gazelor de evapora\u021bie.",
-    cauze: ["Canister EVAP blocat","Vălvă EVAP defectă","Conduși EVAP rupși"],
-    simptome: "[Motor pornesc grele, Bateria se desc\u0103rc\u0103, Eroare EVAP aprins\u0103]",
-    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP defect\u0103, Condu\u0219i EVAP rup\u0219i]"
+    exp: "ECU deteaza erori in circuitul gazelor de evaporație.",
+    cauze: ["Canister EVAP blocat", "Valvă EVAP moartă", "Conduși EVAP răniți"],
+    simptombe: "Motor pornește grele, bateria se descărcă, eroare EVAP aprinsă",
+    verif: "Verifică canisterul EVAP și circuitul de evacuare a golirii."
   },
+
   {
     cod: "P0420",
     marca: "VW",
     sistem: "Evacuare / Catalizator",
     sev: "Medie",
-    titlu: "Eficien\u021b\u0103 catalizator sub pragul admis (Banc 1)",
-    exp: "Sonda lambda de dup\u0103 catalizator arat\u0103 c\u0103 acesta nu mai filtreaz\u0103 corect.",
-    cauze: ["Catalizator uzat","Sondă lambda 2 defectă","Scăpări pe evacuare înainte de sondă"],
-    simptome: "[Emisii rosii, Consopt ridicat, Motor puternic]",
-    verif: "[Catalizator uzat, Sond\u0103 lambda 2 defect\u0103, Sc\u0103p\u0103ri pe evacuare \u00eenainte de sond\u0103]"
+    titlu: "Eficiență catalizator sub pragul admis (Banc 1)",
+    exp: "Sonda lambda de dupa catalizator arata ca aceasta nu mai filtreaza corect.",
+    cauze: ["Catalizator uzat", "Sondă lambda 2 defectă", "Scapari pe evacuare inaintea sondei"],
+    simptombe: "Emisii rosii, consum crescut, motor puternic",
+    verif: "Compară valorile sondelor lambda 1 și 2 pe tester la reptile la calt."
   },
+
+  // === PIECE / Piese Origine OEM ===
   {
     cod: "P2015",
     marca: "PIECE",
     sistem: "Admisie / Piese",
     sev: "Medie",
-    titlu: "Senzor pozi\u021bie clapete galerie admisie (swirl flaps)",
-    exp: "Servomotorul sau tija clapetelor din galeria de admisie nu ajunge la pozi\u021bia comandat\u0103.",
-    cauze: ["Depuneri de ulei și funingine pe clapete","Tijă ruptă","Motoraș M55 defect"],
-    simptome: "[Pornire grea, Consum crescut, Motor trepideaz\u0103]",
-    verif: "[Depuneri de ulei \u0219i funingine pe clapete, Tij\u0103 rupt\u0103, Motora\u0219 M55 defect]"
+    titlu: "Senzor poziție clapete galerie admisie (swirl flaps)",
+    exp: "Servomotorul sau tija clapetelor din galeria de admisie nu ajunge la poziția comandată.",
+    cauze: ["Depuneri de ulei și funingine pe clapete", "Tijă ruptă", "Motoraș M55 defect"],
+    simptombe: "Pornire grea, consum crescut, motor trepida",
+    verif: "Inspectează vizual tija de sub galeria de admisie la punerea contactului."
   },
+
   {
     cod: "P0380",
     marca: "PIECE",
-    sistem: "Pre\u00eenc\u0103lzire",
+    sistem: "Preîncălzire",
     sev: "Medie",
-    titlu: "Circuit buji incandescente / releu pre\u00eenc\u0103lzire",
-    exp: "Una sau mai multe bujii arse sau releul nu comand\u0103.",
-    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
-    simptome: "[Pornire grea la rece, Bujii neumplute]",
-    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
+    titlu: "Circuit bujii incandescente / releu preîncălzire",
+    exp: "Una sau mai multe bujii arse sau releul nu comandă.",
+    cauze: ["Bujii incandescente arși", "Releu preîncălzire defect", "Cablaj oxidat"],
+    simptombe: "Pornire grea la rece, buji neumplute",
+    verif: "Măsoară rezistența fiecărei bujii cu multimetrul (trebuie să fie sub 1-2 Ohmi)."
   },
+
   {
     cod: "DF1012",
     marca: "PIECE",
-    sistem: "Pre\u00eenc\u0103lzire",
+    sistem: "Preîncălzire",
     sev: "Medie",
-    titlu: "Eroare circuit buji incandescente / releu pre\u00eenc\u0103lzire",
-    exp: "Circuitul bujiilor incandescente este defect, afect\u00e2nd pornirea motorului.",
-    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj de alimentare oxidat sau întrerupt"],
-    simptome: "[Pornire grea, Bujii neumplute]",
-    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj de alimentare oxidat sau întrerupt]"
+    titlu: "Eroare circuit bujii incandescente / releu preîncălzire",
+    exp: "Circuitul bujilor incandescente este defect, afectând pornirea motorului.",
+    cauze: ["Bujii incandescente arși", "Releu preîncălzire defect", "Cablaj de alimentare ROS defectiv"],
+    simptombe: "Pornire grea, buji neumplute",
+    verif: "Verifică cablajele ROS și măsoară rezistența fiecărei bujii."
   },
+
   {
     cod: "17941",
     marca: "PIECE",
     sistem: "EGR",
     sev: "Medie",
-    titlu: "Supapă EGR \u2014 debit prea mare / EGR inactivat",
-    exp: "Supapă EGR tr\u0103de prea multe gaze sau nu este controlat corect.",
-    cauze: ["Valvă EGR defectă (se deschide prea mult)","Senzor de presiune EGR defect","Circuit de comutare EGR defect"],
-    simptome: "[Putere redus\u0103, Consum crescur, Emisii neregulate]",
-    verif: "[Valv\u0103 EGR defect\u0103 (se deschide prea mult), Senzor de presiune EGR defect, Circuit de comutare EGR defect]"
+    titlu: "Supapă EGR — debit prea mare / EGR inactivat",
+    exp: "Supapa EGR trăde prea multe gaze sau nu este controlat corect.",
+    cauze: ["Valvă EGR moartă (se deschide prea mult)", "Senzor de presiune EGR defect", "Circuit de comutare EGR defect"],
+    simptombe: "Putere redusă, consum crescur, emisii neregulate",
+    verif: "Verifică valvă EGR și circuitul de comutare."
   },
+
   {
     cod: "P0100",
     marca: "PIECE",
     sistem: "Admisie / MAF",
-    sev: "Ridicat\u0103",
-    titlu: "Circuit senzor mas\u0103 aer (MAF) \u2014 \u00eentrerupt",
-    exp: "Circuitul electric al senzorului de mas\u0103 de aer este \u00eentrerupt.",
-    cauze: ["Cablaj MAF întrerupt","Senzor MAF defect","Conexiune MAF oxidată"],
-    simptome: "[Pornire grea, Motor trage greu, Consum crescut]",
-    verif: "[Cablaj MAF \u00eentrerupt, Senzor MAF defect, Conexiune MAF oxidat\u0103]"
+    sev: "Ridicată",
+    titlu: "Circuit senzor masă aer (MAF) — întrerupt",
+    exp: "Circuitul electric al senzorului de masă de aer este întrerupt.",
+    cauze: ["Cablaj MAF întrerupt", "Senzor MAF moart", "Conexiune MAF oxidată"],
+    simptombe: "Pornire grea, motor trage greu, consum crescut",
+    verif: "Verifică cablajele și conexiunea senzorului MAF."
   },
+
+  // === ELEC / Electrică & Lumini ===
   {
     cod: "P0605",
     marca: "ELEC",
     sistem: "Computer / ECU",
     sev: "Riscul oprirea motorului",
-    titlu: "Eroare circuit ECU \u2014 defec\u021biune",
-    exp: "Circuitul electric al ECU este \u00eentrerupt sau are scurtcircuit.",
-    cauze: ["Muftă ECU defectă","Cablaje scurtcircuit","Alimentare instabilă"],
-    simptome: "[Motor se opre\u0219te brusc, ECU nu porne\u0219te]",
-    verif: "[Muft\u0103 ECU defect\u0103, Cablaje scurtcircuit, Alimentare instabil\u0103]"
+    titlu: "Eroare circuit ECU — defecțiune",
+    exp: "Circuitul electric al ECU este întrerupt sau are scurtcircuit.",
+    cauze: ["Muftă ECU defectă", "Cablaje scurtcircuit", "Alimentare instabilă"],
+    simptombe: "Motor se oprește brusc, ECU nu pornește",
+    verif: "Verifică cablajele de alimentare la ECU și dacă sunt scurtcircuite."
   },
+
   {
     cod: "P0645",
     marca: "ELEC",
     sistem: "Computer / ECU",
     sev: "Medie",
-    titlu: "Sistem de alimentare ECU \u2014 tensiune prea mare",
-    exp: "Tensiunea pe linia de alimentare ECU dep\u0103\u0219e\u0219te pragul maxim.",
-    cauze: ["Furtun de masă defect","Cofă neizolată","Cablaj greșit"],
-    simptome: "[ECU renun\u021b\u0103 s\u0103 execute, Motor se opre\u0219te]",
-    verif: "[Furtun de mas\u0103 defect, Cof\u0103 neizolat\u0103, Cablaj gre\u0219it]"
+    titlu: "Sistem de alimentare ECU — tensiune prea mare",
+    exp: "Tensiunea pe linia de alimentare ECU depășește pragul maxim.",
+    cauze: ["Furtun de masă defect", "Cofă neizolată", "Cablaj greșit"],
+    simptombe: "ECU renunță să execute, motor se oprește",
+    verif: "Verifică tensiunea la alimentarea ECU cu multimetru."
   },
+
   {
     cod: "P0562",
     marca: "ELEC",
     sistem: "Motor / Surse de energie",
-    sev: "Normal\u0103",
-    titlu: "Controlul sursei de energie \u2013 tensiune sc\u0103zut\u0103",
-    exp: "Tensiunea la sursa de energie este sc\u0103zut\u0103, afect\u00e2nd performan\u021ba \u0219i emisiile.",
-    cauze: ["Tensiune slabă la baterie","Baterie slăbă sau învechită","Cablaj greșit la sursă","Alternator defect"],
-    simptome: "[Pornire grea, Consum crescut, Semnalele ECU sunt instabile]",
-    verif: "[Tensiune slab\u0103 la baterie, Baterie sl\u0103b\u0103 sau \u00eenvechit\u0103, Cablaj gre\u0219it la surs\u0103, Alternator defect]"
+    sev: "Normală",
+    titlu: "Controlul sursei de energie – tensiune scăzută",
+    exp: "Tensiunea la sursa de energie este scăzută, afectând performanța și emisiile.",
+    cauze: ["Tensiune slabă la baterie", "Baterie slăbă sau învechită", "Cablaj greșit la sursă", "Alternator defect"],
+    simptombe: "Pornire grea, consum crescut, semnalele ECU sunt instabile",
+    verif: "Verifică bateria și alternatorul, cablajele și tensiunea la sursa de energie."
   },
+
   {
     cod: "P0560",
     marca: "ELEC",
     sistem: "Motor / Surse de energie",
-    sev: "Normal\u0103",
-    titlu: "Senzor tensiune surs\u0103 \u2014 defec\u021biune",
-    exp: "Senzorul de tensiune de surs\u0103 trimite date incorecte.",
-    cauze: ["Senzor tensiune defect","Cablaj senzor oxidat","Conexiune defeectă"],
-    simptome: "[Semnalele ECU sunt incorecte, Motor porne\u0219te greu]",
-    verif: "[Senzor tensiune defect, Cablaj senzor oxidat, Conexiune defeect\u0103]"
+    sev: "Normală",
+    titlu: "Senzor tensiune sursă — defecțiune",
+    exp: "Senzorul de tensiune de sursă trimite date incorecte.",
+    cauze: ["Senzor tensiune moart", "Cablaj senzor oxidat", "Conexiune defectă"],
+    simptombe: "Semnalele ECU sunt incorecte, motor pornește greu",
+    verif: "Verifică semnalele senzorului de tensiune cu diagnotigatorul."
   },
+
   {
     cod: "P0100",
     marca: "ELEC",
     sistem: "Admisie / MAF",
-    sev: "Ridicat\u0103",
-    titlu: "Circuit senzor mas\u0103 aer (MAF) \u2014 \u00eentrerupt",
-    exp: "Circuitul electric al senzorului de mas\u0103 de aer este \u00eentrerupt.",
-    cauze: ["Cablaj MAF întrerupt","Senzor MAF defect","Conexiune MAF oxidată"],
-    simptome: "[Pornire grea, Motor trage greu, Consum crescut]",
-    verif: "[Cablaj MAF \u00eentrerupt, Senzor MAF defect, Conexiune MAF oxidat\u0103]"
+    sev: "Ridicată",
+    titlu: "Circuit senzor masă aer (MAF) — întrerupt",
+    exp: "Circuitul electric al senzorului de masă de aer este întrerupt.",
+    cauze: ["Cablaj MAF întrerupt", "Senzor MAF moart", "Conexiune MAF oxidată"],
+    simptombe: "Pornire grea, motor trage greu, consum crescut",
+    verif: "Verifică cablajele și conexiunea senzorului MAF."
   },
+
 ];
+

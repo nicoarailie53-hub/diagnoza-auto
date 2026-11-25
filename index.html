@@ -1,208 +1,295 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Garaj / Diagnoză Auto - Coduri OBD2</title>
-  <link rel="manifest" href="./manifest.json" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnoză Auto Pro — Coduri Eroare OBD2 & OEM</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-    body { background: #0f172a; color: #f1f5f9; padding: 16px; max-width: 820px; margin: 0 auto; }
-    header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: #1e293b; border-radius: 12px; margin-bottom: 14px; border: 1px solid #334155; }
-    h1 { font-size: 1.2rem; color: #38bdf8; }
-    .sub { font-size: 0.78rem; color: #94a3b8; margin-top: 2px; }
-    .btn-jurnal { background: #10b981; color: #06281e; border: none; padding: 9px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
-    .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-    .tab { border: 2px solid transparent; padding: 9px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.85rem; color: #fff; opacity: 0.82; transition: 0.15s; }
-    .tab.active { opacity: 1; border-color: #ffffff; transform: translateY(-1px); }
+    :root {
+      --slate: #1e293b;
+      --slate-light: #334155;
+      --navy: #0284c7;
+      --amber: #d97706;
+      --amber-dark: #b45309;
+      --royal: #1d4ed8;
+      --purple: #6d28d9;
+      --orange: #b45309;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--slate);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    header h1 span { color: #38bdf8; }
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .search-box {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      background: var(--card-bg);
+      transition: border-color 0.2s;
+    }
+    .search-box:focus {
+      outline: none;
+      border-color: var(--slate);
+      box-shadow: 0 0 0 3px rgba(30,41,59,0.1);
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tab {
+      border: 2px solid transparent;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: white;
+      transition: 0.15s;
+    }
+    .tab.active {
+      opacity: 1;
+      border-color: white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
     .tab-TOATE { background: #475569; }
     .tab-MB { background: #0284c7; }
-    .tab-RENAULT { background: #d97706; }
+    .tab-RENOULT { background: #d97706; }
+    .tab-RENOULT.active { color: white; }
     .tab-VW { background: #1d4ed8; }
-    .tab-PIECE { background: #6d28d9; color: #fff; }
-    .tab-ELEC { background: #b45309; color: #fff; }
-    .search-box { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; font-size: 0.95rem; margin-bottom: 12px; }
-    .count { font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px; }
-    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
-    .card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .badge-cod { font-weight: 800; font-size: 1.05rem; color: #38bdf8; }
-    .badge-marca { font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #334155; color: #e2e8f0; }
-    .sev { font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
-    .sev-Ridicată { background: #7f1d1d; color: #fecaca; }
-    .sev-Medie { background: #78350f; color: #fde68a; }
-    .sev-Normală { background: #047857; color: #bbf7d0; }
-    .titlu { font-size: 0.98rem; font-weight: 600; margin: 8px 0 10px; color: #f8fafc; }
-    .btn-detalii { width: 100%; background: #0f172a; color: #38bdf8; border: 1px solid #38bdf8; padding: 9px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-    .detalii { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid #334155; font-size: 0.9rem; line-height: 1.5; color: #cbd5e1; }
+    .tab-PIECE { background: #6d28d9; }
+    .tab-ELEC { background: #b45309; }
+    .tab.active { opacity: 1; border-color: #fff; transform: translateY(-1px); }
+    .tab:hover { opacity: 0.9; }
+    .tab.active { opacity: 1; border-color: #fff; transform: translateY(-1px); }
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 600px) {
+      .results { grid-template-columns: 1fr; }
+      header h1 { font-size: 1.2rem; }
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .card-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-cod {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+    .badge-marca {
+      background: #cbd5e1;
+      color: #1e293b;
+    }
+    .badge-sev {
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .badge-sev-Ridicată { background: #fee2e2; color: #b91c1c; }
+    .badge-sev-Medie { background: #fef3c7; color: #92400e; }
+    .badge-sev-Normală { background: #d1fae5; color: #065f46; }
+    .badge-sev-Riscul oprirea motorului { background: #fce7f3; color: #9d174d; }
+    .titlu {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .sec {
+      font-size: 0.92rem;
+      color: #334155;
+      margin-top: 0.25rem;
+    }
+    .causelist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.6rem;
+    }
+    .causelist span {
+      background: #f1f5f9;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+    .detalii {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      display: none;
+    }
     .detalii.open { display: block; }
-    .detalii p { margin-bottom: 8px; }
-    .detalii strong { color: #f8fafc; }
-    .jurnal-panel { display: none; background: #1e293b; border: 1px solid #10b981; border-radius: 12px; padding: 14px; margin-bottom: 14px; }
-    .jurnal-panel.open { display: block; }
-    .jurnal-panel input, .jurnal-panel select, .jurnal-panel textarea { width: 100%; padding: 9px; margin: 6px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #fff; }
-    .jurnal-item { background: #0f172a; padding: 10px; border-radius: 8px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; }
-    .jurnal-item .j-nota { font-size: 0.85rem; color: #94a3b8; max-width: 200px; margin-left: 10px; }
+    .detalii p {
+      font-size: 0.85rem;
+      color: #334155;
+      margin: 0.3rem 0;
+    }
+    .btn-detalii {
+      margin-top: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: var(--slate);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      width: 100%;
+      transition: 0.15s;
+    }
+    .btn-detalii:hover { background: #1e293b; }
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-light);
+      grid-column: 1 / -1;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div>
-      <h1>Garaj / Diagnoză Auto</h1>
-      <div class="sub">Caută și interpretează coduri de eroare OBD2</div>
-    </div>
-    <button class="btn-jurnal" onclick="toggleJurnal()">Jurnalul meu (<span id="jCount">0</span>)</button>
+    <h1>Diagnoză <span>Auto Pro</span> — Coduri Eroare OBD2 &amp; OEM</h1>
   </header>
-
-  <div id="jurnalPanel" class="jurnal-panel">
-    <h3 style="color:#10b981;margin-bottom:6px;">Jurnalul meu de cercetare</h3>
-    <input id="jCod" placeholder="Cod eroare (ex: P0299, DF053)" />
-    <select id="jMarca">
-      <option value="Mercedes-Benz">Mercedes-Benz</option>
-      <option value="Renault">Renault</option>
-      <option value="Volkswagen / VAG">Volkswagen / VAG</option>
-      <option value="General OBD2">General OBD2</option>
-    </select>
-    <textarea id="jNota" rows="2" placeholder="Notițe personale (simptome, piese verificate)..."></textarea>
-    <button class="btn-jurnal" style="width:100%;margin-top:4px;" onclick="salveazaJurnal()">Salvează în jurnal</button>
-    <div id="jLista"></div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab tab-TOATE active" onclick="setMarca('TOATE', this)">TOATE (OBD2)</button>
-    <button class="tab tab-MB" onclick="setMarca('MB', this)">Mercedes-Benz</button>
-    <button class="tab tab-RENAULT" onclick="setMarca('RENAULT', this)">Renault (DFxxx)</button>
-    <button class="tab tab-VW" onclick="setMarca('VW', this)">Volkswagen / VAG</button>
-    <button class="tab tab-PIECE" onclick="setMarca('PIECE', this)">Piese Origine OEM</button>
-    <button class="tab tab-ELEC" onclick="setMarca('ELEC', this)">Electrică & Lumini</button>
-  </div>
-
-  <input id="searchInput" class="search-box" oninput="renderLista()" placeholder="Caută cod (ex: P0300, DF053, 17965) sau cuvânt cheie (turbină, EGR, DPF)..." />
-  <div id="rezCount" class="count"></div>
-  <div id="listaCoduri"></div>
-
-  <script src="codes.js"></script>
-
+  <main>
+    <input type="text" id="searchInput" class="search-box" placeholder="Caută după cod, titlu, sistem, simptome sau cauze...">
+    <div id="tabs" class="tabs">
+      <button class="tab tab-TOATE active" data-marca="TOATE">TOATE</button>
+      <button class="tab tab-MB" data-marca="MB">Mercedes-Benz</button>
+      <button class="tab tab-RENOULT" data-marca="RENOULT">Renault</button>
+      <button class="tab tab-VW" data-marca="VW">Volkswagen / VAG</button>
+      <button class="tab tab-PIECE" data-marca="PIECE">Piese Origine OEM</button>
+      <button class="tab tab-ELEC" data-marca="ELEC">Electrică &amp; Lumini</button>
+    </div>
+    <div id="results" class="results"></div>
+  </main>
   <script>
-    // ===== Jurnal =====
-    const state = { jurnal: JSON.parse(localStorage.getItem('jurnalDiagnoza') || '[]') };
-
-    function loadJurnal() {
-      document.getElementById('jCount').textContent = state.jurnal.length;
-      renderJurnal();
+    function filterByMarca(c) {
+      const active = document.querySelector('.tab.active');
+      const marca = active ? active.dataset.marca : 'TOATE';
+      if (marca === 'TOATE') return true;
+      if (marca === 'ELEC') return c.marca === 'ELEC';
+      if (marca === 'PIECE') return c.marca === 'PIECE';
+      return c.marca === marca;
     }
-
-    function renderJurnal() {
-      const container = document.getElementById('jLista');
-      container.innerHTML = '';
-      state.jurnal.forEach((item, idx) => {
-        const div = document.createElement('div');
-        div.className = 'jurnal-item';
-        div.innerHTML = '<strong>' + item.marca + ' ' + item.cod + '</strong><span class="j-nota">' + escapeHtml(item.nota) + '</span><button onclick="stergeJurnal(' + idx + ')" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:4px;font-size:0.75rem;cursor:pointer;">Șterge</button>';
-        container.appendChild(div);
+    function filterBySearch(c, q) {
+      if (!q) return true;
+      q = q.toLowerCase();
+      return (
+        (c.cod || '').toLowerCase().includes(q) ||
+        (c.titlu || '').toLowerCase().includes(q) ||
+        (c.sistem || '').toLowerCase().includes(q) ||
+        (c.simptombe || '').toLowerCase().includes(q) ||
+        (c.cauze || []).some(x => x.toLowerCase().includes(q))
+      );
+    }
+    function renderResults() {
+      const input = document.getElementById('searchInput');
+      const q = input.value.trim();
+      const active = document.querySelector('.tab.active');
+      const marca = active ? active.dataset.marca : 'TOATE';
+      const filtered = CODURI.filter(c => {
+        if (marca !== 'TOATE' && c.marca !== marca) return false;
+        if (!filterBySearch(c, q)) return false;
+        return true;
       });
-    }
-
-    function salveazaJurnal() {
-      const cod = document.getElementById('jCod').value.toUpperCase();
-      const marca = document.getElementById('jMarca').value;
-      const nota = document.getElementById('jNota').value.trim();
-      if (!cod) { alert('Te rog introdu un cod eroare.'); return; }
-      state.jurnal.push({ cod: cod, marca: marca, nota: nota, data: new Date().toLocaleString() });
-      document.getElementById('jCount').textContent = state.jurnal.length;
-      localStorage.setItem('jurnalDiagnoza', JSON.stringify(state.jurnal));
-      renderJurnal();
-      document.getElementById('jCod').value = '';
-      document.getElementById('jNota').value = '';
-      alert('Notița a fost salvată în jurnal!');
-    }
-
-    function stergeJurnal(idx) {
-      state.jurnal.splice(idx, 1);
-      document.getElementById('jCount').textContent = state.jurnal.length;
-      localStorage.setItem('jurnalDiagnoza', JSON.stringify(state.jurnal));
-      renderJurnal();
-    }
-
-    function toggleJurnal() {
-      const panel = document.getElementById('jurnalPanel');
-      panel.classList.toggle('open');
-    }
-
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
-    // ===== Filterare taburi =====
-    function setMarca(marca, el) {
-      state.marca = marca;
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
-      renderLista();
-    }
-
-    function filterByMarca(cod) {
-      if (state.marca === 'TOATE') return true;
-      if (state.marca === 'General OBD2') return cod.marca === 'TOATE';
-      return cod.marca === state.marca;
-    }
-
-    function filterBySearch(cod) {
-      if (!state.search) return true;
-      const q = state.search.toLowerCase();
-      const codLower = (cod.cod || '').toLowerCase();
-      const titluLower = (cod.titlu || '').toLowerCase();
-      const sistemLower = (cod.sistem || '').toLowerCase();
-      const cauzeLower = (cod.cauze || []).join(' ').toLowerCase();
-      return codLower.includes(q) || titluLower.includes(q) || sistemLower.includes(q) || cauzeLower.includes(q);
-    }
-
-    function renderLista() {
-      const lista = document.getElementById('listaCoduri');
-      const countEl = document.getElementById('rezCount');
-      const allCodes = CODURI.filter(c => filterByMarca(c) && filterBySearch(c));
-      countEl.textContent = 'Afisează ' + allCodes.length + ' rezultate';
-      lista.innerHTML = '';
-      if (allCodes.length === 0) {
-        lista.innerHTML = '<div style="color:#94a3b8;padding:20px;text-align:center;">Nicio corespondență găsită.</div>';
+      const container = document.getElementById('results');
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="no-results">Nicio corespondență găsită.</div>';
         return;
       }
-      allCodes.forEach(cod => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML =
-          '<div class="card-top">' +
-          '<span class="badge-cod">' + cod.cod + '</span>' +
-          '<span class="badge-marca">' + cod.marca + '</span>' +
-          '<span class="sev sev-' + cod.sev + '">' + cod.sev + '</span>' +
-          '</div>' +
-          '<div class="titlu">' + cod.titlu + '</div>' +
-          '<button class="btn-detalii" onclick="toggleDetalii(this)">Vezi detalii complete</button>' +
-          '<div class="detalii">' +
-          '<p><strong>Descriere:</strong> ' + cod.titlu + '</p>' +
-          '<p><strong>Explicație:</strong> ' + cod.exp + '</p>' +
-          '<p><strong>Cauze probabile:</strong> ' + cod.cauze.join(', ') + '</p>' +
-          '<p><strong>Simptome:</strong> ' + cod.simptome + '</p>' +
-          '<p><strong>Pași de verificare:</strong> ' + cod.verif.replace(/[\\[\\]]/g, '') + '</p>' +
+      container.innerHTML = filtered.map(c => {
+        const sev = c.sev || 'Normală';
+        const cauzeHtml = (c.cauze || []).map(x => '<span>' + escapeHtml(x) + '</span>').join('');
+        return '' +
+          '<div class="card">' +
+            '<div class="card-top">' +
+              '<span class="badge badge-cod">' + escapeHtml(c.cod) + '</span>' +
+              '<span class="badge badge-marca">' + escapeHtml(c.marca) + '</span>' +
+              '<span class="badge badge-sev badge-sev-' + escapeHtml(sev) + '">' + escapeHtml(sev) + '</span>' +
+            '</div>' +
+            '<div class="titlu">' + escapeHtml(c.titlu) + '</div>' +
+            '<div class="sec"><strong>Descriere:</strong> ' + escapeHtml(c.exp) + '</div>' +
+            '<div class="detalii open">' +
+              '<p><strong>Explicație:</strong> ' + escapeHtml(c.exp) + '</p>' +
+              '<p><strong>Cauze probabile:</strong> <div class="causelist">' + cauzeHtml + '</div></p>' +
+              '<p><strong>Simptome:</strong> ' + escapeHtml(c.simptombe) + '</p>' +
+              '<p><strong>Pași de verificare:</strong> ' + escapeHtml(c.verif) + '</p>' +
+              '<button class="btn-detalii" onclick="this.parentElement.parentElement.querySelector('.detalii').classList.toggle('open')">Ascunde detalii</button>' +
+            '</div>' +
           '</div>';
-        lista.appendChild(card);
+      }).join('');
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function(m) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
       });
     }
-
-    function toggleDetalii(btn) {
-      const card = btn.parentElement;
-      const detalii = card.querySelector('.detalii');
-      detalii.classList.toggle('open');
-      btn.textContent = detalii.classList.contains('open') ? 'Ascunde detalii' : 'Vezi detalii complete';
-    }
-
-    // Inicializare
-    document.addEventListener('DOMContentLoaded', function() {
-      loadJurnal();
-      renderLista();
+    document.getElementById('searchInput').addEventListener('input', renderResults);
+    document.getElementById('tabs').addEventListener('click', function(e) {
+      const btn = e.target.closest('.tab');
+      if (!btn) return;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      renderResults();
     });
+    renderResults();
   </script>
 </body>
 </html>
