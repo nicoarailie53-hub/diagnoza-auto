@@ -1,9 +1,9 @@
 ﻿// Service Worker for Atelier Auto - Coduri OBD PWA
-const CACHE_NAME = 'diagnoza-auto-v4';
+const CACHE_NAME = 'diagnoza-auto-v5';
 const STATIC_ASSETS = [
   './', './index.html', './manifest.json', './favicon.svg',
   './media/icon-192.png', './media/icon-512.png',
-  './data/codes.json', './app.js'
+  
 ];
 self.addEventListener('install', (event) => {
   event.waitUntil(
