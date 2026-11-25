@@ -7,9 +7,9 @@ const CODURI = [
     sev: "Ridicat\u0103",
     titlu: "Rateuri de aprindere (multi-cilindru)",
     exp: "Arderi incomplete detectate aleatoriu pe mai mul\u021bi cilindri.",
-    cauze: ["Buji uzate","Bobine defecte","Inz. murdari"],
+    cauze: ["Bujii uzate","Bobine defecte","Inz. murdari"],
     simptome: "[Motor trepideaz\u0103, Pierde putere, Martor aprins]",
-    verif: "[Buji uzate, Bobine defecte, Inz. murdari]"
+    verif: "[Bujii uzate, Bobine defecte, Inz. murdari]"
   },
   {
     cod: "P0420",
@@ -29,9 +29,9 @@ const CODURI = [
     sev: "Medie",
     titlu: "Sistem EVAP - erori multiple",
     exp: "ECU detecteaz\u0103 erori \u00een circuitul gazelor de evapora\u021bie.",
-    cauze: ["Canister EVAP blocat","Vălvă EVAP moartă","Conduși EVAP rupși"],
+    cauze: ["Canister EVAP blocat","Vălvă EVAP defectă","Conduși EVAP rupși"],
     simptome: "[Motor pornesc grele, Bateria se desc\u0103rc\u0103, Eroare EVAP aprins\u0103]",
-    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP moart\u0103, Condu\u0219i EVAP rup\u0219i]"
+    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP defect\u0103, Condu\u0219i EVAP rup\u0219i]"
   },
   {
     cod: "P0171",
@@ -62,9 +62,9 @@ const CODURI = [
     sev: "Ridicat\u0103",
     titlu: "Presiune subreglarea supraaliment\u0103rii (underboost)",
     exp: "Turbinele nu produc suficient\u0103 supraalimentare pentru regimul cerut.",
-    cauze: ["Furtun vacuum slăbit","Actuator VGT moart","Senzor presiune blocat"],
+    cauze: ["Furtun vacuum slăbit","Actuator VGT defect","Senzor presiune blocat"],
     simptome: "[Putere redus\u0103, Consum crescur, Intr\u0103 \u00een Limp Mode]",
-    verif: "[Furtun vacuum sl\u0103bit, Actuator VGT moart, Senzor presiune blocat]"
+    verif: "[Furtun vacuum sl\u0103bit, Actuator VGT defect, Senzor presiune blocat]"
   },
   {
     cod: "P0455",
@@ -73,9 +73,9 @@ const CODURI = [
     sev: "Medie",
     titlu: "Golire major\u0103 sistem EVAP",
     exp: "Liberarea excesiv\u0103 de Gaze din rezervorul de combustibil c\u0103tre evacuare.",
-    cauze: ["Canister EVAP blocat","Vălvă EVAP moartă","Conduși EVAP rupși"],
+    cauze: ["Canister EVAP blocat","Vălvă EVAP defectă","Conduși EVAP rupși"],
     simptome: "[Motor pornesc grele, Bateria se desc\u0103rc\u0103, Eroare EVAP aprins\u0103]",
-    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP moart\u0103, Condu\u0219i EVAP rup\u0219i]"
+    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP defect\u0103, Condu\u0219i EVAP rup\u0219i]"
   },
   {
     cod: "P0456",
@@ -93,11 +93,11 @@ const CODURI = [
     marca: "MB",
     sistem: "EGR",
     sev: "Medie",
-    titlu: "EGRu rece \u2014 debit prea sc\u0103zut (P0411)",
-    exp: "EGRu rece nu tr\u0103de la temperatura de referin\u021b\u0103, afect\u00e2nd reducerea polu\u0103riilor.",
-    cauze: ["EGRu ars sau cuplu defect","Furră în canal EGR","Senzor de temperatură EGR defect"],
+    titlu: "Supapă EGR rece \u2014 debit prea sc\u0103zut (P0411)",
+    exp: "Supapă EGR rece nu tr\u0103de la temperatura de referin\u021b\u0103, afect\u00e2nd reducerea polu\u0103riilor.",
+    cauze: ["Supapă EGR ars sau cuplu defect","Furră în canal EGR","Senzor de temperatură EGR defect"],
     simptome: "[Putere redus\u0103, Consum crescur, Emisii neregulate]",
-    verif: "[EGRu ars sau cuplu defect, Furr\u0103 \u00een canal EGR, Senzor de temperatur\u0103 EGR defect]"
+    verif: "[Supapă EGR ars sau cuplu defect, Furr\u0103 \u00een canal EGR, Senzor de temperatur\u0103 EGR defect]"
   },
   {
     cod: "P0380",
@@ -106,9 +106,9 @@ const CODURI = [
     sev: "Medie",
     titlu: "Circuit buji incandescente / releu pre\u00eenc\u0103lzire",
     exp: "Una sau mai multe bujii arse sau releul nu comand\u0103.",
-    cauze: ["Buji incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
-    simptome: "[Pornire grea la rece, Buji neumplute]",
-    verif: "[Buji incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
+    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
+    simptome: "[Pornire grea la rece, Bujii neumplute]",
+    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
   },
   {
     cod: "DF053",
@@ -128,9 +128,9 @@ const CODURI = [
     sev: "Medie",
     titlu: "Circuit releu / buji incandescente",
     exp: "Una sau mai multe bujii arse sau releul nu comand\u0103.",
-    cauze: ["Buji incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
-    simptome: "[Pornire grea la rece, Buji neumplute]",
-    verif: "[Buji incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
+    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
+    simptome: "[Pornire grea la rece, Bujii neumplute]",
+    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
   },
   {
     cod: "DF1012",
@@ -139,9 +139,9 @@ const CODURI = [
     sev: "Medie",
     titlu: "Eroare circuit buji incandescente / releu pre\u00eenc\u0103lzire",
     exp: "Circuitul bujiilor incandescente este defect, afect\u00e2nd pornirea motorului.",
-    cauze: ["Buji incandescente arse","Releu preîncălzire moart","Cablaj de alimentare ROS defective"],
-    simptome: "[Pornire grea, Buji neumplute]",
-    verif: "[Buji incandescente arse, Releu pre\u00eenc\u0103lzire moart, Cablaj de alimentare ROS defective]"
+    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj de alimentare oxidat sau întrerupt"],
+    simptome: "[Pornire grea, Bujii neumplute]",
+    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj de alimentare oxidat sau întrerupt]"
   },
   {
     cod: "DF1011",
@@ -149,10 +149,10 @@ const CODURI = [
     sistem: "EGR",
     sev: "Medie",
     titlu: "Preluare EGR excesiv\u0103",
-    exp: "EGRu preia prea multe gaze, reduc\u00e2nd puterea \u0219i cre\u0219tind consumul.",
-    cauze: ["Valvă EGR moartă (se deschide prea mult)","Furră în canal EGR","Circuit EGR colmatat"],
+    exp: "Supapă EGR preia prea multe gaze, reduc\u00e2nd puterea \u0219i cre\u0219tind consumul.",
+    cauze: ["Valvă EGR defectă (se deschide prea mult)","Furră în canal EGR","Circuit EGR colmatat"],
     simptome: "[Putere redus\u0103, Consum crescur, Emisii neregulate]",
-    verif: "[Valv\u0103 EGR moart\u0103 (se deschide prea mult), Furr\u0103 \u00een canal EGR, Circuit EGR colmatat]"
+    verif: "[Valv\u0103 EGR defect\u0103 (se deschide prea mult), Furr\u0103 \u00een canal EGR, Circuit EGR colmatat]"
   },
   {
     cod: "DF800",
@@ -161,9 +161,9 @@ const CODURI = [
     sev: "Medie",
     titlu: "Control geometrie variabil\u0103 turbin\u0103 (VGT)",
     exp: "Sistemul de control al geometriei turbinelor nu func\u021bioneaz\u0103 corect.",
-    cauze: ["Actuator VGT moart","Senzor de presiune cameră de admisie","Circuit de comutare VGT defect"],
+    cauze: ["Actuator VGT defect","Senzor de presiune cameră de admisie","Circuit de comutare VGT defect"],
     simptome: "[Putere redus\u0103, Turbine intr\u0103 \u00een Limp Mode]",
-    verif: "[Actuator VGT moart, Senzor de presiune camer\u0103 de admisie, Circuit de comutare VGT defect]"
+    verif: "[Actuator VGT defect, Senzor de presiune camer\u0103 de admisie, Circuit de comutare VGT defect]"
   },
   {
     cod: "17965",
@@ -172,20 +172,20 @@ const CODURI = [
     sev: "Ridicat\u0103",
     titlu: "Presiune supraalimentare dep\u0103\u0219it\u0103 (Overboost)",
     exp: "Supraalimentarea dep\u0103\u0219e\u0219te limita de siguran\u021b\u0103, adesea cauzat\u0103 de blocare mecanic\u0103.",
-    cauze: ["Electrovalvă N75 moartă","Galerie admisie blocată","Senzor de presiune de supraalimentare defect"],
+    cauze: ["Electrovalvă N75 defectă","Galerie admisie blocată","Senzor de presiune de supraalimentare defect"],
     simptome: "[Intr\u0103 \u00een Limp Mode p\u00e2n\u0103 la repornire]",
-    verif: "[Electrovalv\u0103 N75 moart\u0103, Galerie admisie blocat\u0103, Senzor de presiune de supraalimentare defect]"
+    verif: "[Electrovalv\u0103 N75 defect\u0103, Galerie admisie blocat\u0103, Senzor de presiune de supraalimentare defect]"
   },
   {
     cod: "17941",
     marca: "VW",
     sistem: "EGR",
     sev: "Medie",
-    titlu: "EGRu \u2014 debit prea mare / EGR inactivat",
-    exp: "EGRu tr\u0103de prea multe gaze sau nu este controlat corect.",
-    cauze: ["Valvă EGR moartă (se deschide prea mult)","Senzor de presiune EGR defect","Circuit de comutare EGR defect"],
+    titlu: "Supapă EGR \u2014 debit prea mare / EGR inactivat",
+    exp: "Supapă EGR tr\u0103de prea multe gaze sau nu este controlat corect.",
+    cauze: ["Valvă EGR defectă (se deschide prea mult)","Senzor de presiune EGR defect","Circuit de comutare EGR defect"],
     simptome: "[Putere redus\u0103, Consum crescur, Emisii neregulate]",
-    verif: "[Valv\u0103 EGR moart\u0103 (se deschide prea mult), Senzor de presiune EGR defect, Circuit de comutare EGR defect]"
+    verif: "[Valv\u0103 EGR defect\u0103 (se deschide prea mult), Senzor de presiune EGR defect, Circuit de comutare EGR defect]"
   },
   {
     cod: "P0300",
@@ -194,9 +194,9 @@ const CODURI = [
     sev: "Ridicat\u0103",
     titlu: "Rateuri de aprindere (multi-cilindru) - VAG",
     exp: "Arderi incomplete detectate aleatoriu pe mai mul\u021bi cilindri.",
-    cauze: ["Buji uzate","Bobine defecte","Inz. murdari"],
+    cauze: ["Bujii uzate","Bobine defecte","Inz. murdari"],
     simptome: "[Motor trepideaz\u0103, Pierde putere, Martor aprins]",
-    verif: "[Buji uzate, Bobine defecte, Inz. murdari]"
+    verif: "[Bujii uzate, Bobine defecte, Inz. murdari]"
   },
   {
     cod: "P0440",
@@ -205,9 +205,9 @@ const CODURI = [
     sev: "Medie",
     titlu: "Sistem EVAP - erori multiple",
     exp: "ECU detecteaz\u0103 erori \u00een circuitul gazelor de evapora\u021bie.",
-    cauze: ["Canister EVAP blocat","Vălvă EVAP moartă","Conduși EVAP rupși"],
+    cauze: ["Canister EVAP blocat","Vălvă EVAP defectă","Conduși EVAP rupși"],
     simptome: "[Motor pornesc grele, Bateria se desc\u0103rc\u0103, Eroare EVAP aprins\u0103]",
-    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP moart\u0103, Condu\u0219i EVAP rup\u0219i]"
+    verif: "[Canister EVAP blocat, V\u0103lv\u0103 EVAP defect\u0103, Condu\u0219i EVAP rup\u0219i]"
   },
   {
     cod: "P0420",
@@ -238,9 +238,9 @@ const CODURI = [
     sev: "Medie",
     titlu: "Circuit buji incandescente / releu pre\u00eenc\u0103lzire",
     exp: "Una sau mai multe bujii arse sau releul nu comand\u0103.",
-    cauze: ["Buji incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
-    simptome: "[Pornire grea la rece, Buji neumplute]",
-    verif: "[Buji incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
+    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj oxidat"],
+    simptome: "[Pornire grea la rece, Bujii neumplute]",
+    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj oxidat]"
   },
   {
     cod: "DF1012",
@@ -249,20 +249,20 @@ const CODURI = [
     sev: "Medie",
     titlu: "Eroare circuit buji incandescente / releu pre\u00eenc\u0103lzire",
     exp: "Circuitul bujiilor incandescente este defect, afect\u00e2nd pornirea motorului.",
-    cauze: ["Buji incandescente arse","Releu preîncălzire moart","Cablaj de alimentare ROS defective"],
-    simptome: "[Pornire grea, Buji neumplute]",
-    verif: "[Buji incandescente arse, Releu pre\u00eenc\u0103lzire moart, Cablaj de alimentare ROS defective]"
+    cauze: ["Bujii incandescente arse","Releu preîncălzire defect","Cablaj de alimentare oxidat sau întrerupt"],
+    simptome: "[Pornire grea, Bujii neumplute]",
+    verif: "[Bujii incandescente arse, Releu pre\u00eenc\u0103lzire defect, Cablaj de alimentare oxidat sau întrerupt]"
   },
   {
     cod: "17941",
     marca: "PIECE",
     sistem: "EGR",
     sev: "Medie",
-    titlu: "EGRu \u2014 debit prea mare / EGR inactivat",
-    exp: "EGRu tr\u0103de prea multe gaze sau nu este controlat corect.",
-    cauze: ["Valvă EGR moartă (se deschide prea mult)","Senzor de presiune EGR defect","Circuit de comutare EGR defect"],
+    titlu: "Supapă EGR \u2014 debit prea mare / EGR inactivat",
+    exp: "Supapă EGR tr\u0103de prea multe gaze sau nu este controlat corect.",
+    cauze: ["Valvă EGR defectă (se deschide prea mult)","Senzor de presiune EGR defect","Circuit de comutare EGR defect"],
     simptome: "[Putere redus\u0103, Consum crescur, Emisii neregulate]",
-    verif: "[Valv\u0103 EGR moart\u0103 (se deschide prea mult), Senzor de presiune EGR defect, Circuit de comutare EGR defect]"
+    verif: "[Valv\u0103 EGR defect\u0103 (se deschide prea mult), Senzor de presiune EGR defect, Circuit de comutare EGR defect]"
   },
   {
     cod: "P0100",
@@ -271,9 +271,9 @@ const CODURI = [
     sev: "Ridicat\u0103",
     titlu: "Circuit senzor mas\u0103 aer (MAF) \u2014 \u00eentrerupt",
     exp: "Circuitul electric al senzorului de mas\u0103 de aer este \u00eentrerupt.",
-    cauze: ["Cablaj MAF întrerupt","Senzor MAF moart","Conexiune MAF oxidată"],
+    cauze: ["Cablaj MAF întrerupt","Senzor MAF defect","Conexiune MAF oxidată"],
     simptome: "[Pornire grea, Motor trage greu, Consum crescut]",
-    verif: "[Cablaj MAF \u00eentrerupt, Senzor MAF moart, Conexiune MAF oxidat\u0103]"
+    verif: "[Cablaj MAF \u00eentrerupt, Senzor MAF defect, Conexiune MAF oxidat\u0103]"
   },
   {
     cod: "P0605",
@@ -315,9 +315,9 @@ const CODURI = [
     sev: "Normal\u0103",
     titlu: "Senzor tensiune surs\u0103 \u2014 defec\u021biune",
     exp: "Senzorul de tensiune de surs\u0103 trimite date incorecte.",
-    cauze: ["Senzor tensiune moart","Cablaj senzor oxidat","Conexiune defeectă"],
+    cauze: ["Senzor tensiune defect","Cablaj senzor oxidat","Conexiune defeectă"],
     simptome: "[Semnalele ECU sunt incorecte, Motor porne\u0219te greu]",
-    verif: "[Senzor tensiune moart, Cablaj senzor oxidat, Conexiune defeect\u0103]"
+    verif: "[Senzor tensiune defect, Cablaj senzor oxidat, Conexiune defeect\u0103]"
   },
   {
     cod: "P0100",
@@ -326,8 +326,8 @@ const CODURI = [
     sev: "Ridicat\u0103",
     titlu: "Circuit senzor mas\u0103 aer (MAF) \u2014 \u00eentrerupt",
     exp: "Circuitul electric al senzorului de mas\u0103 de aer este \u00eentrerupt.",
-    cauze: ["Cablaj MAF întrerupt","Senzor MAF moart","Conexiune MAF oxidată"],
+    cauze: ["Cablaj MAF întrerupt","Senzor MAF defect","Conexiune MAF oxidată"],
     simptome: "[Pornire grea, Motor trage greu, Consum crescut]",
-    verif: "[Cablaj MAF \u00eentrerupt, Senzor MAF moart, Conexiune MAF oxidat\u0103]"
+    verif: "[Cablaj MAF \u00eentrerupt, Senzor MAF defect, Conexiune MAF oxidat\u0103]"
   },
 ];

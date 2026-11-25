@@ -184,8 +184,8 @@
           '<p><strong>Descriere:</strong> ' + cod.titlu + '</p>' +
           '<p><strong>Explicație:</strong> ' + cod.exp + '</p>' +
           '<p><strong>Cauze probabile:</strong> ' + cod.cauze.join(', ') + '</p>' +
-          '<p><strong>Simptome:</strong> Increțește puterea, rușine mecanistică, consum mai mare, emisii neregulate.</p>' +
-          '<p><strong>Pași de verificare:</strong> ' + cod.verif + '</p>' +
+          '<p><strong>Simptome:</strong> ' + cod.simptome + '</p>' +
+          '<p><strong>Pași de verificare:</strong> ' + cod.verif.replace(/[\\[\\]]/g, '') + '</p>' +
           '</div>';
         lista.appendChild(card);
       });
